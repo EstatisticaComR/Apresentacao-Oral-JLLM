@@ -1,0 +1,42 @@
+---
+title: "Mapa dos assaltos ao Serviço Postal"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+```{r, echo = F}
+dados=read.csv(file="http://bit.ly/bancodedadosCorreios", encoding = "UTF-8")
+```
+
+```{r, eval  = F}
+dados=read.csv(file="base_de_dados_em_sigilo", encoding = "UTF-8")
+```
+
+```{r message=FALSE, warning=FALSE}
+library(leaflet)
+
+getColor <- function(dados) {
+  sapply(dados$ano, function(ano) {
+  if(ano == 2013) {
+    "blue"
+  } else if(ano == 2014) {
+    "green"
+  } else if(ano == 2015) {
+    "orange"
+  } else {
+    "red"
+  }})
+}
+
+icons <- awesomeIcons(
+  icon = 'ios-close',
+  iconColor = 'black',
+  library = 'ion',
+  markerColor = getColor(dados)
+)
+
+leaflet(dados) %>% addTiles() %>%
+  addAwesomeMarkers(dados$Longitude/10^6, dados$Latitude/10^6, icon=icons, label=~as.character(ano))
+```
