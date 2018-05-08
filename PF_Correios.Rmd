@@ -2,33 +2,41 @@
 title: 'Mapa da Criminalidade: alvo correios'
 author: "Luciane Ferreira Alcoforado"
 date: "8 de julho de 2016"
-output: word_document
+#output: word_document
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
 ---
+```{r, echo = F}
+dados=read.csv(file="http://bit.ly/bancodedadosCorreios", encoding = "UTF-8")
+```
 
-
+```{r, eval  = F}
+dados=read.csv(file="base_de_dados_em_sigilo", encoding = "UTF-8")
+```
 
 ```{r}
-dados=read.csv2(file="C:\\Users\\tpc 02\\Desktop\\R Projeto\\PF_Correios.csv")
 head(dados)
 dim(dados)
 str(dados)
 attach(dados)
 summary(Latitude)
 summary(dados)
-
 ```
+
 Como os registros estao distribuidos por ano:
 ```{r}
 #Separando por ano
 
-dados2014=dados[dados$ano==2014,]
-dados2015=dados[dados$ano==2015,]
-dados2016=dados[dados$ano==2016,]
-ano=as.factor(2014:2016)
-freq=c(length(dados2014$ano),length(dados2015$ano),length(dados2016$ano))
-data.frame(ano,freq, perc=round(100*freq/sum(freq),1))
+dados2014 <- dados[dados$ano==2014,]
+dados2015 <- dados[dados$ano==2015,]
+dados2016 <- dados[dados$ano==2016,]
+ano <- as.factor(2013:2016)
+freq <- c(length(dados2014$ano),length(dados2015$ano),length(dados2016$ano))
+#data.frame(ano, freq, perc=round(100*freq/sum(freq),1))
 require(ggplot2)
-p=ggplot(data=data.frame(ano,freq),aes(x=ano, y=freq,fill=as.factor(freq)))+
+p <- ggplot(data=data.frame(ano,freq),aes(x=ano, y=freq,fill=as.factor(freq)))+
   geom_bar(stat="identity", width=0.5,position="dodge")+
   labs(x="ano", y= "frequencia", title="Numero de Assaltos aos Correios") 
 p
@@ -95,8 +103,8 @@ dt[,.N,by=substr(DT.Assalto,1,10)][order(-N)]
 dt[,.N,by=substr(H.Assalto,11,15)][order(-N)]
 
 #Numero de ocorrencia cuja vitima possue 2o grau
-dt[like(G_Instrução.vitima,"2"),.N]
-dt[like(G_Instrução.vitima," "),.N] #sem informacao
+dt[like(G_Instru??o.vitima,"2"),.N]
+dt[like(G_Instru??o.vitima," "),.N] #sem informacao
 ```
 
 
@@ -105,7 +113,7 @@ require(dplyr)
 #Quantos bairros distintos h??
 dt %>% select(Bairro) %>% distinct() %>% nrow()
 #Quantos graus de instrucao distintos h??
-dt %>% select(G_Instrução.vitima) %>% distinct() %>% nrow()
+dt %>% select(G_Instru??o.vitima) %>% distinct() %>% nrow()
 #Quantas ocorrencias em cada Bairro h??
 #modo1
 dt %>% group_by(Bairro) %>% summarize(ocorrencia=n()) %>% arrange(desc(ocorrencia))
