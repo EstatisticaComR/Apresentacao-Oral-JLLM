@@ -8,6 +8,7 @@ output:
     theme: cayman
     highlight: github
 ---
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 #install.packages("leaflet")
 #install.packages("data.table")
@@ -34,19 +35,17 @@ summary(dados)
 Como os registros estao distribuidos por ano:
 ```{r}
 #Separando por ano
-
-dados2014 <- dados[dados$ano==2014,]
-dados2015 <- dados[dados$ano==2015,]
-dados2016 <- dados[dados$ano==2016,]
+danos <- dados %>% count(ano) %>% filter(ano!=2013)
 ano <- as.factor(2014:2016)
-freq <- c(length(dados2014$ano),length(dados2015$ano),length(dados2016$ano))
-#data.frame(ano, freq, perc=round(100*freq/sum(freq),1))
+freq <- c(danos)
 
-p <- ggplot(data=data.frame(ano,freq),aes(x=ano, y=freq,fill=as.factor(freq)))+
+#data.frame(ano, freq, perc=round(100*freq/sum(freq),1))
+p <- ggplot(data=data.frame(ano,freq),aes(x=ano, y=freq, fill=as.factor(freq)))+
   geom_bar(stat="identity", width=0.5,position="dodge")+
-  labs(x="ano", y= "frequencia", title="Numero de Assaltos aos Correios") 
+  labs(x="ano", y= "frequencia", title="Número de Assaltos aos Correios") 
 p
 ```
+
 Cabe ressaltar que os registros de 2014 e 2016 sao parciais.
 ```{r, eval  = F}
 #Separando por dia da semana
@@ -81,6 +80,7 @@ p2=ggplot(data=dados1,aes(x=as.factor(ano),fill=dia.sem.name))+
   labs(x="dia da semana", y= "frequencia", title="Numero de Assaltos aos Correios") 
 p2
 ```
+
 Agora vamos utilizar o pacote data.table que foi concebido para facilitar a tabulacao dos dados. 
 Neste pacote podemos acessar rapidamente um subconjunto de dados, agrupa-los, atualiza-los, produzir tabelas.
 Para instalar o pacote use: install.packages("data.table")
@@ -112,7 +112,6 @@ dt[,.N,by=substr(H.Assalto,11,15)][order(-N)]
 dt[like(G_Instru??o.vitima,"2"),.N]
 dt[like(G_Instru??o.vitima," "),.N] #sem informacao
 ```
-
 
 ```{r, eval  = F}
 require(dplyr)
