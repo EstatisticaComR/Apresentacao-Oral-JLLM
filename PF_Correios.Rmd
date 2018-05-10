@@ -8,7 +8,13 @@ output:
     theme: cayman
     highlight: github
 ---
-```{r, echo = F}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+#install.packages("leaflet")
+#install.packages("data.table")
+#install.packages("tidyverse")
+library(leaflet)
+library(data.table)
+library(tidyverse)
 dados=read.csv(file="http://bit.ly/bancodedadosCorreios", encoding = "UTF-8")
 ```
 
@@ -32,17 +38,17 @@ Como os registros estao distribuidos por ano:
 dados2014 <- dados[dados$ano==2014,]
 dados2015 <- dados[dados$ano==2015,]
 dados2016 <- dados[dados$ano==2016,]
-ano <- as.factor(2013:2016)
+ano <- as.factor(2014:2016)
 freq <- c(length(dados2014$ano),length(dados2015$ano),length(dados2016$ano))
 #data.frame(ano, freq, perc=round(100*freq/sum(freq),1))
-require(ggplot2)
+
 p <- ggplot(data=data.frame(ano,freq),aes(x=ano, y=freq,fill=as.factor(freq)))+
   geom_bar(stat="identity", width=0.5,position="dodge")+
   labs(x="ano", y= "frequencia", title="Numero de Assaltos aos Correios") 
 p
 ```
 Cabe ressaltar que os registros de 2014 e 2016 sao parciais.
-```{r}
+```{r, eval  = F}
 #Separando por dia da semana
 dadosseg=dados[dados$dia.semana==1,]
 dadoster=dados[dados$dia.semana==2,]
@@ -79,7 +85,7 @@ Agora vamos utilizar o pacote data.table que foi concebido para facilitar a tabu
 Neste pacote podemos acessar rapidamente um subconjunto de dados, agrupa-los, atualiza-los, produzir tabelas.
 Para instalar o pacote use: install.packages("data.table")
 
-```{r}
+```{r, eval  = F}
 #install.packages("data.table")
 library(data.table)
 dt=data.table(dados)
@@ -108,7 +114,7 @@ dt[like(G_Instru??o.vitima," "),.N] #sem informacao
 ```
 
 
-```{r}
+```{r, eval  = F}
 require(dplyr)
 #Quantos bairros distintos h??
 dt %>% select(Bairro) %>% distinct() %>% nrow()
@@ -148,33 +154,3 @@ TC
 
 
 ```
-
-
-```{r}
-#install.packages("leaflet")
-library(leaflet)
-library(magrittr)
-
-getColor <- function(dados) {
-  sapply(dados$ano, function(ano) {
-  if(ano <= 2014) {
-    "green"
-  } else if(ano <= 2015) {
-    "orange"
-  } else {
-    "red"
-  } })
-}
-
-icons <- awesomeIcons(
-  icon = 'ios-close',
-  iconColor = 'black',
-  library = 'ion',
-  markerColor = getColor(dados)
-)
-
-leaflet(dados) %>% addTiles() %>%
-  addAwesomeMarkers(Longitude/10^6, Latitude/10^6, icon=icons, label=~as.character(ano))
-
-```
-
