@@ -13,7 +13,7 @@
 <meta name="author" content="Luciane Ferreira Alcoforado" />
 
 
-<title>Mapa da Criminalidade: alvo correios</title>
+<title>Mapa da Criminalidade: Correios</title>
 
 
 
@@ -68,7 +68,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 <section class="page-header">
-<h1 class="title toc-ignore project-name">Mapa da Criminalidade: alvo correios</h1>
+<h1 class="title toc-ignore project-name">Mapa da Criminalidade: Correios</h1>
 <h4 class="author project-author">Luciane Ferreira Alcoforado</h4>
 <h4 class="date project-date">8 de julho de 2016</h4>
 </section>
@@ -76,170 +76,113 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 <section class="main-content">
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dados=<span class="kw">read.csv</span>(<span class="dt">file=</span><span class="st">&quot;base_de_dados_em_sigilo&quot;</span>, <span class="dt">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(dados)</code></pre></div>
-<pre><code>##          RO               SIAPRO DT.Assalto  ano dia.semana mês H.Assalto
-## 1 9971/2016 08458.000111/2016-25 06/01/2016 2016          3   1     12:00
-## 2 9961/2015 08458.016272/2015-50 28/10/2015 2015          3  10     13:40
-## 3 9965/2015  0845.016301/2015-17 30/12/2015 2015          3  12     13:30
-## 4 9064/2015 08458.003910/2015-72 19/10/2015 2015          1  10     13:10
-## 5 8861/2015 08458.005380/2015-05 09/05/2015 2015          6   5     11:50
-## 6 8924/2015                      29/06/2015 2015          1   6     15:00
-##                                   Logradouro          Bairro         Mun
-## 1 Rua Tapuias esquina com a Rua Padre Vieria Jardim Catarina São Gonçalo
-## 2                          Rua Laguna Nº 150 Jardim Catarina São Gonçalo
-## 3  Rua Águas das Marinhas, quadra 22, lote 1 Jardim Catarina São Gonçalo
-## 4                  Rua Presidente Truman, 30    Vista Alegre São Gonçalo
-## 5    Rua Maria Rita, na altura do número 450         Paraíso São Gonçalo
-## 6                       Rua Olegário Mariano      Porto Novo São Gonçalo
-##         CEP  Latitude Longitude Veiculo.assaltante N.Assaltantes
-## 1 24715-421 -22804894 -42999190              Carro             1
-## 2 24715-170 -22808159 -42996584        Motocicleta             2
-## 3           -22807877 -42992908               A pé             1
-## 4 24724-565 -22802128 -42961779              Carro             2
-## 5 24431-740 -22829681 -43073834        Motocicleta             1
-## 6           -22823946 -43076618              Carro             3
-##                                                                                                                                                                       Fisico
-## 1                                                                                                                        Mulato alto, vestida bermuda branca e camisa branca
-## 2                                                                                                                                                                   Capacete
-## 3                                                                                                                                1,80m de altura, negro, nem gordo nem magro
-## 4                                                                                                                               O homem de cor negra e a mulher morena clara
-## 5 Negro, cerca de 1,80m, magrinho, usando aparelho ortodôntico cujos elásticos eram amarelos, usando boné, calça cumpida, camisa manga curta de cor preta e chinelos de dedo
-## 6                                                                                        Um deles era magro, altura mediana e outro um pouco mais gordo e mais baixo (1,65m)
-##   Cabelo Nasc.vitima Sexo.vitima Naturalidade G_Instrução.vitima
-## 1  Curto  08/04/1963           M  São Gonçalo   2º Grau Completo
-## 2         14/10/1991           M  São Gonçalo   2º Grau Completo
-## 3         14/10/1991           M  São Gonçalo   2º Grau Completo
-## 4  Curto                       M                                
-## 5         07/08/1965           M  São Gonçalo 3º Grau Incompleto
-## 6                              M                                
-##   Veiculo.vitima Sedex PAC
-## 1          Doblo    10  18
-## 2          Kombi     0   2
-## 3          Kombi     9  14
-## 4                   NA  NA
-## 5                    3   1
-## 6                   NA  NA</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(dados)</code></pre></div>
-<pre><code>## [1] 229  24</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(dados)</code></pre></div>
-<pre><code>## 'data.frame':    229 obs. of  24 variables:
-##  $ RO                : Factor w/ 225 levels &quot;&quot;,&quot;10.049/2016&quot;,..: 220 217 219 188 146 164 1 162 45 168 ...
-##  $ SIAPRO            : Factor w/ 214 levels &quot;&quot;,&quot;0845.016301/2015-17&quot;,..: 4 212 2 56 106 1 122 144 123 131 ...
-##  $ DT.Assalto        : Factor w/ 164 levels &quot;&quot;,&quot;01/04/2015&quot;,..: 23 147 162 96 35 151 38 101 48 116 ...
-##  $ ano               : int  2016 2015 2015 2015 2015 2015 2015 2015 2015 2015 ...
-##  $ dia.semana        : int  3 3 3 1 6 1 4 6 4 4 ...
-##  $ mês               : int  1 10 12 10 5 6 7 6 6 7 ...
-##  $ H.Assalto         : Factor w/ 75 levels &quot;&quot;,&quot;02:30&quot;,&quot;02:38&quot;,..: 27 45 44 40 26 60 44 25 9 4 ...
-##  $ Logradouro        : Factor w/ 226 levels &quot;&quot;,&quot;Anselmo de Andrade&quot;,..: 191 132 38 174 148 159 226 99 197 222 ...
-##  $ Bairro            : Factor w/ 91 levels &quot;Alcântara&quot;,&quot;Aldeia da Prata&quot;,..: 34 34 34 91 62 71 88 15 1 45 ...
-##  $ Mun               : Factor w/ 6 levels &quot;Guapimirim&quot;,&quot;Itaboraí&quot;,..: 5 5 5 5 5 5 5 4 5 5 ...
-##  $ CEP               : Factor w/ 137 levels &quot;&quot;,&quot;23140-316&quot;,..: 97 91 1 117 40 1 1 2 1 1 ...
-##  $ Latitude          : int  -22804894 -22808159 -22807877 -22802128 -22829681 -22823946 -22851041 -22887883 -22826564 -22878258 ...
-##  $ Longitude         : int  -42999190 -42996584 -42992908 -42961779 -43073834 -43076618 -43072379 -43074151 -43000409 -43026397 ...
-##  $ Veiculo.assaltante: Factor w/ 9 levels &quot;&quot;,&quot;A pé&quot;,&quot;A Pé&quot;,..: 7 9 2 7 9 7 7 7 8 7 ...
-##  $ N.Assaltantes     : int  1 2 1 2 1 3 3 3 2 8 ...
-##  $ Fisico            : Factor w/ 195 levels &quot;&quot;,&quot;1,75 m,85 kg,forte ,moreno,usava óculos tipo Ray Ban, lentes espelhadas ,boné&quot;,..: 81 21 3 89 84 130 1 123 1 195 ...
-##  $ Cabelo            : Factor w/ 11 levels &quot;&quot;,&quot;Ambos de cabelos curtos&quot;,..: 5 1 1 5 1 1 1 1 1 1 ...
-##  $ Nasc.vitima       : Factor w/ 76 levels &quot;&quot;,&quot;01/09/1965&quot;,..: 14 27 27 1 13 1 1 1 1 7 ...
-##  $ Sexo.vitima       : Factor w/ 6 levels &quot;&quot;,&quot;F&quot;,&quot;F/M&quot;,&quot;M&quot;,..: 4 4 4 4 4 4 4 4 4 4 ...
-##  $ Naturalidade      : Factor w/ 25 levels &quot;&quot;,&quot;Campina Grande/PB&quot;,..: 21 21 21 1 21 1 1 1 1 17 ...
-##  $ G_Instrução.vitima: Factor w/ 11 levels &quot;&quot;,&quot;1º Grau Completo&quot;,..: 5 5 5 1 11 1 1 1 1 3 ...
-##  $ Veiculo.vitima    : Factor w/ 12 levels &quot;&quot;,&quot;Auto renaut&quot;,..: 6 10 10 1 1 1 10 1 12 4 ...
-##  $ Sedex             : int  10 0 9 NA 3 NA NA 1 NA NA ...
-##  $ PAC               : int  18 2 14 NA 1 NA NA 6 NA NA ...</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">attach</span>(dados)
-<span class="kw">summary</span>(Latitude)</code></pre></div>
-<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-## -22955639 -22835652 -22821493 -22817287 -22806646 -22522703</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dados=<span class="kw">read.csv</span>(<span class="dt">file=</span><span class="st">&quot;base_de_dados_em_sigilo&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as_tibble</span>(dados)</code></pre></div>
+<pre><code>## # A tibble: 38 x 24
+##    RO     SIAPRO  DT.Assalto   ano dia.semana   mês H.Assalto Logradouro  
+##  * &lt;fct&gt;  &lt;fct&gt;   &lt;fct&gt;      &lt;int&gt;      &lt;int&gt; &lt;int&gt; &lt;fct&gt;     &lt;fct&gt;       
+##  1 9971/~ 08458.~ 06/01/2016  2016          3     1 12:00     Rua Tapuias~
+##  2 9961/~ 08458.~ 28/10/2015  2015          3    10 13:40     Rua Laguna ~
+##  3 9965/~ 0845.0~ 30/12/2015  2015          3    12 13:30     Rua Águas d~
+##  4 8861/~ 08458.~ 09/05/2015  2015          6     5 11:50     Rua Maria R~
+##  5 8913/~ 08458.~ 20/06/2015  2015          6     6 11:45     Rua Gerônim~
+##  6 9918/~ 08458.~ 28/11/2015  2015          6    11 11:45     Rua Ernâni ~
+##  7 9072/~ 08458.~ 26/10/2015  2015          1    10 15:00     Rua Itororó~
+##  8 773/2~ 08458.~ 17/08/2015  2015          1     8 14:40     Rua Coronel~
+##  9 774/2~ 08458.~ 18/08/2015  2015          2     8 11:30     Rua Vitorin~
+## 10 9067/~ 08458.~ 21/10/2015  2015          3    10 14:00     Estrada da ~
+## # ... with 28 more rows, and 16 more variables: Bairro &lt;fct&gt;, Mun &lt;fct&gt;,
+## #   CEP &lt;fct&gt;, Latitude &lt;int&gt;, Longitude &lt;int&gt;, Veiculo.assaltante &lt;fct&gt;,
+## #   N.Assaltantes &lt;int&gt;, Fisico &lt;fct&gt;, Cabelo &lt;fct&gt;, Nasc.vitima &lt;fct&gt;,
+## #   Sexo.vitima &lt;fct&gt;, Naturalidade &lt;fct&gt;, G_Instrução.vitima &lt;fct&gt;,
+## #   Veiculo.vitima &lt;fct&gt;, Sedex &lt;int&gt;, PAC &lt;int&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(dados)</code></pre></div>
-<pre><code>##            RO                       SIAPRO         DT.Assalto 
-##             :  3                       : 15             : 18  
-##  8991/2015  :  2   08458.003835/2015-40:  2   11/09/2015:  4  
-##  934/2015   :  2   0845.016301/2015-17 :  1   28/08/2015:  4  
-##  10.049/2016:  1   08455.042990/2015-10:  1   29/07/2015:  4  
-##  10.057/2016:  1   08458.000111/2016-25:  1   06/05/2015:  3  
-##  10.071/2016:  1   08458.000629/2016-69:  1   16/07/2015:  3  
-##  (Other)    :219   (Other)             :208   (Other)   :193  
-##       ano         dia.semana         mês           H.Assalto  
-##  Min.   :2013   Min.   :1.000   Min.   : 1.000          : 24  
-##  1st Qu.:2015   1st Qu.:2.000   1st Qu.: 4.000   14:00  : 10  
-##  Median :2015   Median :3.000   Median : 7.000   14:30  :  9  
-##  Mean   :2015   Mean   :3.265   Mean   : 6.588   11:00  :  8  
-##  3rd Qu.:2015   3rd Qu.:4.000   3rd Qu.: 9.000   12:00  :  8  
-##  Max.   :2016   Max.   :7.000   Max.   :12.000   13:00  :  8  
-##                 NA's   :18      NA's   :18       (Other):162  
-##                                   Logradouro              Bairro   
-##                                        :  2   Jardim Catarina: 27  
-##  Rua José Mana Junior                  :  2   Alcântara      : 11  
-##  Rua Maria Menezes,próximo ao n° 10    :  2   Barro Vermelho : 10  
-##  Anselmo de Andrade                    :  1   Mutuá          :  9  
-##  Av Vereador Pereira Neto, na Quadra 37:  1   Trindade       :  9  
-##  Av. Almirante Tamandaré 2781          :  1   Coelho         :  7  
-##  (Other)                               :220   (Other)        :156  
-##           Mun             CEP         Latitude           Longitude        
-##  Guapimirim :  3            : 81   Min.   :-22955639   Min.   :-43684529  
-##  Itaboraí   : 10   25900-000:  4   1st Qu.:-22835652   1st Qu.:-43063604  
-##  Magé       :  8   25940-000:  3   Median :-22821493   Median :-43021657  
-##  Niterói    : 26   24130-340:  2   Mean   :-22817287   Mean   :-43027342  
-##  São Gonçalo:181   24436-760:  2   3rd Qu.:-22806646   3rd Qu.:-42994694  
-##  Tanguá     :  1   24715-050:  2   Max.   :-22522703   Max.   :-42726584  
-##                    (Other)  :135                                          
-##    Veiculo.assaltante N.Assaltantes   
-##  Carro      :118      Min.   : 1.000  
-##             : 31      1st Qu.: 1.000  
-##  Motocicleta: 28      Median : 2.000  
-##  A pé       : 21      Mean   : 2.058  
-##  A Pé       : 10      3rd Qu.: 2.000  
-##  carro      : 10      Max.   :10.000  
-##  (Other)    : 11      NA's   :3       
-##                                                                            Fisico   
-##                                                                               : 35  
-##  1,75 m,85 kg,forte ,moreno,usava óculos tipo Ray Ban, lentes espelhadas ,boné:  1  
-##  1,80m de altura, negro, nem gordo nem magro                                  :  1  
-##  Abordou: era negro, &quot;gordinho&quot; e preto; Comparsa: era moreno                 :  1  
-##  Afrodescendete,1,80 m e magro                                                :  1  
-##  Alto e claro                                                                 :  1  
-##  (Other)                                                                      :189  
-##                      Cabelo        Nasc.vitima  Sexo.vitima
-##                         :207             :138      :  7    
-##  Curto                  :  9   08/04/1963:  6   F  : 12    
-##  Curto/Curto            :  3   16/10/1973:  4   F/M:  1    
-##  Ambos de cabelos curtos:  2   07/07/1978:  3   M  :199    
-##  curto                  :  2   20/03/1990:  3   M/F:  1    
-##  Careca                 :  1   14/10/1991:  2   M/M:  9    
-##  (Other)                :  5   (Other)   : 73              
-##                    Naturalidade          G_Instrução.vitima Veiculo.vitima
-##                          :145                     :166             :163   
-##  São Gonçalo             : 31   2º Grau Completo  : 47      Kombi  : 35   
-##  Rio de Janeiro          : 16   1º Grau Completo  :  4      Ducato :  6   
-##  Niterói                 :  9   3º Grau Completo  :  4      Doblo  :  5   
-##  Campos dos Goytacazes/RJ:  4   3º Grau Incompleto:  2      Doblô  :  5   
-##  Magé/RJ                 :  3   1º Grau Incompleto:  1      Carro  :  4   
-##  (Other)                 : 21   (Other)           :  5      (Other): 11   
-##      Sedex            PAC       
-##  Min.   : 0.00   Min.   : 0.00  
-##  1st Qu.: 6.00   1st Qu.: 4.00  
-##  Median :11.00   Median :10.00  
-##  Mean   :13.69   Mean   :11.36  
-##  3rd Qu.:20.00   3rd Qu.:14.50  
-##  Max.   :39.00   Max.   :63.00  
-##  NA's   :184     NA's   :190</code></pre>
+<pre><code>##            RO                      SIAPRO        DT.Assalto      ano      
+##  10.057/2016: 1                       : 1   02/03/2016: 1   Min.   :2014  
+##  10008/206  : 1   0845.016301/2015-17 : 1   06/01/2016: 1   1st Qu.:2015  
+##  10034/2016 : 1   08458.000111/2016-25: 1   09/05/2015: 1   Median :2015  
+##  10051/2016 : 1   08458.000629/2016-69: 1   09/12/2015: 1   Mean   :2015  
+##  10154/2016 : 1   08458.000716/2016-16: 1   10/01/2015: 1   3rd Qu.:2016  
+##  10158/2016 : 1   08458.000783/2016-31: 1   10/02/2015: 1   Max.   :2016  
+##  (Other)    :32   (Other)             :32   (Other)   :32                 
+##    dia.semana         mês         H.Assalto 
+##  Min.   :1.000   Min.   : 1.0   14:00  : 4  
+##  1st Qu.:2.000   1st Qu.: 2.0   11:45  : 3  
+##  Median :3.000   Median : 6.5   11:50  : 2  
+##  Mean   :3.158   Mean   : 6.5   12:00  : 2  
+##  3rd Qu.:4.000   3rd Qu.:10.0   13:00  : 2  
+##  Max.   :6.000   Max.   :12.0   14:15  : 2  
+##                                 (Other):23  
+##                                    Logradouro             Bairro  
+##  Av. Paula Lemos                        : 1   Jardim Catarina: 8  
+##  Av. Presidente Trumam                  : 1   Vista Alegre   : 4  
+##  Estrada da Conceição, próximo ao n°4900: 1   Barro Vermelho : 2  
+##  Estrada do Boqueirão                   : 1   Gradim         : 2  
+##  Estrada do Coelho                      : 1   Mutuá          : 2  
+##  nº 40 da Travessa Menezes              : 1   Mutuaguaçú     : 2  
+##  (Other)                                :32   (Other)        :18  
+##           Mun            CEP        Latitude           Longitude        
+##  Guapimirim : 0            : 9   Min.   :-22887883   Min.   :-43111375  
+##  Itaboraí   : 0   24715-170: 2   1st Qu.:-22827330   1st Qu.:-43066246  
+##  Magé       : 3   23140-316: 1   Median :-22811224   Median :-43028344  
+##  Niterói    : 2   24110-813: 1   Mean   :-22806122   Mean   :-43026702  
+##  São Gonçalo:33   24415-560: 1   3rd Qu.:-22806880   3rd Qu.:-42995166  
+##  Tanguá     : 0   24420-380: 1   Max.   :-22624808   Max.   :-42956006  
+##                   (Other)  :23                                          
+##          Veiculo.assaltante N.Assaltantes  
+##  Carro            :18       Min.   :1.000  
+##  Motocicleta      : 7       1st Qu.:1.000  
+##  Carro/Motocicleta: 4       Median :2.000  
+##  A pé             : 3       Mean   :1.921  
+##                   : 2       3rd Qu.:2.000  
+##  carro            : 2       Max.   :5.000  
+##  (Other)          : 2                      
+##                                                           Fisico  
+##                                                              : 8  
+##  1,80m de altura, negro, nem gordo nem magro                 : 1  
+##  Alto e claro                                                : 1  
+##  Alto, branco, usando boné e barbudo                         : 1  
+##  Alto,magro de pele escura                                   : 1  
+##  Ambos era morenos, altura de um deles era por volta de 1,75m: 1  
+##  (Other)                                                     :25  
+##                      Cabelo       Nasc.vitima Sexo.vitima
+##                         :28             :20      : 1     
+##  Curto                  : 3   08/04/1963: 4   F  : 1     
+##  curto                  : 2   07/07/1978: 2   F/M: 0     
+##  Ambos de cabelos curtos: 1   14/10/1991: 2   M  :34     
+##  Careca                 : 1   05/12/1976: 1   M/F: 1     
+##  Curto/cgrande          : 1   07/01/1990: 1   M/M: 1     
+##  (Other)                : 2   (Other)   : 8              
+##                    Naturalidade                         G_Instrução.vitima
+##                          :21                                     :22      
+##  São Gonçalo             :11    2º Grau Completo                 :12      
+##  Rio de Janeiro          : 2    3º Grau Incompleto               : 2      
+##  Campos dos Goytacazes/RJ: 1    1º Grau Completo                 : 1      
+##  Duque de Caxias/RJ      : 1    2º Grau Completo/2º Grau Completo: 1      
+##  Niterói                 : 1    1º Grau Incompleto               : 0      
+##  (Other)                 : 1    (Other)                          : 0      
+##  Veiculo.vitima     Sedex            PAC       
+##         :15     Min.   : 0.00   Min.   : 0.00  
+##  Kombi  :15     1st Qu.: 5.25   1st Qu.: 4.00  
+##  Doblo  : 3     Median :10.50   Median :10.50  
+##  Ducato : 3     Mean   :12.76   Mean   :11.45  
+##  Carro  : 1     3rd Qu.:16.00   3rd Qu.:14.75  
+##  Doblô  : 1     Max.   :39.00   Max.   :63.00  
+##  (Other): 0</code></pre>
 <p>Como os registros estao distribuidos por ano:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Separando por ano</span>
+dAnos &lt;-<span class="st"> </span>dados <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(ano) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(ano<span class="op">!=</span><span class="dv">2013</span>)
+ano &lt;-<span class="st"> </span>dAnos <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">pull</span>(ano) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as.factor</span>()
+freq &lt;-<span class="st"> </span>dAnos <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(n) <span class="co">#pull seleciona coluna e retorna como vetor</span>
 
-dados2014 &lt;-<span class="st"> </span>dados[dados<span class="op">$</span>ano<span class="op">==</span><span class="dv">2014</span>,]
-dados2015 &lt;-<span class="st"> </span>dados[dados<span class="op">$</span>ano<span class="op">==</span><span class="dv">2015</span>,]
-dados2016 &lt;-<span class="st"> </span>dados[dados<span class="op">$</span>ano<span class="op">==</span><span class="dv">2016</span>,]
-ano &lt;-<span class="st"> </span><span class="kw">as.factor</span>(<span class="dv">2014</span><span class="op">:</span><span class="dv">2016</span>)
-freq &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">length</span>(dados2014<span class="op">$</span>ano),<span class="kw">length</span>(dados2015<span class="op">$</span>ano),<span class="kw">length</span>(dados2016<span class="op">$</span>ano))
-<span class="co">#data.frame(ano, freq, perc=round(100*freq/sum(freq),1))</span>
-
-p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span><span class="kw">data.frame</span>(ano,freq),<span class="kw">aes</span>(<span class="dt">x=</span>ano, <span class="dt">y=</span>freq,<span class="dt">fill=</span><span class="kw">as.factor</span>(freq)))<span class="op">+</span>
+<span class="kw">data.frame</span>(ano, freq, <span class="dt">perc=</span><span class="kw">round</span>(<span class="dv">100</span><span class="op">*</span>freq<span class="op">/</span><span class="kw">sum</span>(freq),<span class="dv">1</span>))
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span><span class="kw">data.frame</span>(ano,freq),<span class="kw">aes</span>(<span class="dt">x=</span>ano, <span class="dt">y=</span>freq, <span class="dt">fill=</span><span class="kw">as.factor</span>(freq)))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">width=</span><span class="fl">0.5</span>,<span class="dt">position=</span><span class="st">&quot;dodge&quot;</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;ano&quot;</span>, <span class="dt">y=</span> <span class="st">&quot;frequencia&quot;</span>, <span class="dt">title=</span><span class="st">&quot;Numero de Assaltos aos Correios&quot;</span>) 
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;ano&quot;</span>, <span class="dt">y=</span> <span class="st">&quot;frequencia&quot;</span>, <span class="dt">title=</span><span class="st">&quot;Número de Assaltos aos Correios&quot;</span>) 
 p</code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --> Cabe ressaltar que os registros de 2014 e 2016 sao parciais.</p>
+<p>Cabe ressaltar que os registros de 2014 e 2016 sao parciais.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Separando por dia da semana</span>
 dadosseg=dados[dados<span class="op">$</span>dia.semana<span class="op">==</span><span class="dv">1</span>,]
 dadoster=dados[dados<span class="op">$</span>dia.semana<span class="op">==</span><span class="dv">2</span>,]
@@ -251,69 +194,281 @@ dadosdom=dados[dados<span class="op">$</span>dia.semana<span class="op">==</span
 
 dia=<span class="kw">c</span>(<span class="st">&quot;1.seg&quot;</span>,<span class="st">&quot;2.ter&quot;</span>, <span class="st">&quot;3.qua&quot;</span>, <span class="st">&quot;4.qui&quot;</span>, <span class="st">&quot;5.sex&quot;</span>, <span class="st">&quot;6.sab&quot;</span>,<span class="st">&quot;7.dom&quot;</span>)
 freq1=<span class="kw">c</span>(<span class="kw">length</span>(dadosseg<span class="op">$</span>dia.semana),<span class="kw">length</span>(dadoster<span class="op">$</span>dia.semana),<span class="kw">length</span>(dadosqua<span class="op">$</span>dia.semana),<span class="kw">length</span>(dadosqui<span class="op">$</span>dia.semana),<span class="kw">length</span>(dadossex<span class="op">$</span>dia.semana),<span class="kw">length</span>(dadossab<span class="op">$</span>dia.semana),<span class="kw">length</span>(dadosdom<span class="op">$</span>dia.semana))
-<span class="kw">data.frame</span>(dia,freq1,<span class="dt">perc=</span><span class="kw">round</span>(<span class="dv">100</span><span class="op">*</span>freq1<span class="op">/</span><span class="kw">sum</span>(freq1),<span class="dv">1</span>))
-
-p1=<span class="kw">ggplot</span>(<span class="dt">data=</span><span class="kw">data.frame</span>(dia,freq1),<span class="kw">aes</span>(<span class="dt">x=</span>dia, <span class="dt">y=</span>freq1,<span class="dt">fill=</span><span class="kw">as.factor</span>(freq1)))<span class="op">+</span>
+<span class="kw">data.frame</span>(dia,freq1,<span class="dt">perc=</span><span class="kw">round</span>(<span class="dv">100</span><span class="op">*</span>freq1<span class="op">/</span><span class="kw">sum</span>(freq1),<span class="dv">1</span>))</code></pre></div>
+<pre><code>##     dia freq1 perc
+## 1 1.seg     6 15.8
+## 2 2.ter     6 15.8
+## 3 3.qua    13 34.2
+## 4 4.qui     6 15.8
+## 5 5.sex     3  7.9
+## 6 6.sab     4 10.5
+## 7 7.dom     0  0.0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1=<span class="kw">ggplot</span>(<span class="dt">data=</span><span class="kw">data.frame</span>(dia,freq1),<span class="kw">aes</span>(<span class="dt">x=</span>dia, <span class="dt">y=</span>freq1, <span class="dt">fill=</span><span class="kw">as.factor</span>(freq1)))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">width=</span><span class="fl">0.5</span>,<span class="dt">position=</span><span class="st">&quot;dodge&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;dia da semana&quot;</span>, <span class="dt">y=</span> <span class="st">&quot;frequencia&quot;</span>, <span class="dt">title=</span><span class="st">&quot;Numero de Assaltos aos Correios&quot;</span>) 
-p1
-<span class="co">#Eliminando os dados faltantes do banco de dados, criando o banco dados1</span>
+p1</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Eliminando os dados faltantes do banco de dados, criando o banco dados1</span>
 ind=<span class="kw">is.na</span>(dados<span class="op">$</span>dia.semana)
 dados1=dados[ind<span class="op">==</span><span class="ot">FALSE</span>,]
+
 <span class="co">#criando correspondencia entre dia da semana e o nome:</span>
 sem=<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>
 nome.sem=<span class="kw">c</span>(<span class="st">&quot;1-segunda&quot;</span>, <span class="st">&quot;2-terca&quot;</span>, <span class="st">&quot;3-quarta&quot;</span>, <span class="st">&quot;4-quinta&quot;</span>, <span class="st">&quot;5-sexta&quot;</span>, <span class="st">&quot;6-sabado&quot;</span>, <span class="st">&quot;7-domingo&quot;</span>)
 <span class="kw">names</span>(sem)=nome.sem
-sem
-dia.sem.name=<span class="kw">names</span>(sem)[dados1<span class="op">$</span>dia.semana]
+sem</code></pre></div>
+<pre><code>## 1-segunda   2-terca  3-quarta  4-quinta   5-sexta  6-sabado 7-domingo 
+##         1         2         3         4         5         6         7</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dia.sem.name=<span class="kw">names</span>(sem)[dados1<span class="op">$</span>dia.semana]
 dados1=<span class="kw">data.frame</span>(dados1,dia.sem.name)
 p2=<span class="kw">ggplot</span>(<span class="dt">data=</span>dados1,<span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">as.factor</span>(ano),<span class="dt">fill=</span>dia.sem.name))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;count&quot;</span>, <span class="dt">width=</span><span class="fl">0.5</span>,<span class="dt">position=</span><span class="st">&quot;dodge&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;dia da semana&quot;</span>, <span class="dt">y=</span> <span class="st">&quot;frequencia&quot;</span>, <span class="dt">title=</span><span class="st">&quot;Numero de Assaltos aos Correios&quot;</span>) 
 p2</code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAHgCAMAAABNUi8GAAABF1BMVEUAAAAAADoAAGYAOjoAOmYAOpAAZmYAZpAAZrYAujgAv8QzMzM6AAA6ADo6AGY6Ojo6OmY6OpA6ZmY6kJA6kNtNTU1NTW5NTY5NbqtNjshhnP9mAABmADpmAGZmOgBmOjpmOpBmZmZmtv9uTU1uTW5uTY5ubo5ubqtuq+SOTU2OTW6OTY6Obk2ObquOyP+QOgCQOjqQOmaQZgCQkDqQkGaQtpCQ27aQ29uQ2/+rbk2rbm6rbo6rjk2ryKur5OSr5P+2ZgC2Zjq225C2/7a2/9u2//+3nwDIjk3I///bkDrb/7bb/9vb///kq27k///r6+vy8vL1ZOP4dm3/tmb/yI7/25D/29v/5Kv//7b//8j//9v//+T///8VCicaAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAamElEQVR4nO2dD3/ctnmAT17dXRYli1dd4kRptirJYqeblXVNKyfbpHX1bCWy11ZW9e++/+cYAZJH4MQXR4KAXkR6nl/iIyHwPRz4CCCpe8nZEqBgZtoNAAiBoFA0CApFg6BQNAgKRYOgUDQICkWDoFA0kYIez3bs68XuzrT3v9qf9xWfzvY2b/nwZHn2/otp7788mlVsfLP2/eC2iRZ068C8ZhL0an/W661fpxLm+ME0Qc+2Z5aN74agSkQLOrO7K5OgZ9t/X/8CBLecLujFrlWzehkyhoICsYI++Hc7yRtB66HFmHa2vXM6q8pPV/rOZsag6md2yG3XG6pqD/64P3cqduH/sG3Nr4bSegJeLZitzHuYt/1xv15cbd7VWrpVxRrtkcrZtmmv39zfrzW6/pjSW0EmogX9474Z49YF/Ydqytz6drueNK0fZh9f7f/NdqXsar2JYdZ+9plbseFid361X0sxqw8RVwv1VnVRK6jzPm2t7g3sqlCjfpOWteb+uNZo+zGlt4JcRAv6wo4664JWe8yOoeaH1T7cM4PT3OxNO+TVgjWHche79X6eL7uKDac2jC2z4+O8W6idqoM2U3wXd1XL4lbtr7FaqKu3lVbNXTW6fT8pEGQjXlA7P64LOjd7rVo1ZWf1LF1V7VSpOGpGyvrHprCrWAe31e3Or4yfN5Wd8xgzzTqCdnG9Wk5VqYYnWFepHb3rRncfwnwk+a0gCxMEvaom+RvHoO1eP2onRzMh1jXOtutjyEbQ0+bYcr7sKtbBm1Nrs2ovApmNVwvNDz1BV3FXtdw4c7HGmqBtpfYDmX/9DyG+FeRigqBmHv8hh6BHzXo9ws7qs5JmwQyJe81kf1PQrvqyHj33mgOE/hrdMeixGRNHCeoFgmxMEbSa5H9hLjMdmRXvSNEK2uzNZbuve6d4x58We4xgXtq9f9Sei1QLdV3vGHQt7qp6V1Wq4fy9wRxTd1N8J6j/IcRAkItJgppT2Z16N9mzHV/QK3ueb0apdo+vnSS1m3UV7Q/avyIdz/ZOrUDV8LZaaA5z7amMEbQ+0WrirmrZ7d2q/TWc66A73klSJ6j/IcRAkItJgpppbqeZBs31Il/QdnpsDwLWryatNusqGlaiVoI1F3OsGd7CStC+y0zNb0BXVarh/yXJv6DkN7r9EGIgyMQ0QZs50vxd6ccbx6DN7t/r/kpo1p2jtmq1uVDfVqxL2z9O2dm2sWe1YI4stw6OmmHZDpBd3FUty6rqUqrRWtweE7iX5N1Gdx9CDAR54NtMUDQICkWDoFA0CApFg6BQNAgKRYOgUDQICkUTJ+j/5SNn7EmU2rCsO0MfBB1KqQ1D0B5y9knG2JMotWEI2kPOPskYexKlNgxBe8jZJxljT6LUhiFoDzn7JGPsSZTaMATtIWefZIw9iVIbhqA95OyTjLEnUWrDELSHnH2SMfYkSm0YgvaQs08yxp5EqQ1D0B5y9knG2JMotWEI2kPOPskYexKlNgxBe8jZJxljT6LUhiFoDzn7JGPsSZTaMATtIWefZIw9iVIbhqA95OyTjLEnUWrDELSHnH2SMfYkSm0YgvaQs08yxp5EqQ1D0B5y9knG2GN5x6WkhrkgaA85+yRj7LEgqD4IGgBB9UHQAAiqD4IGQFB9EDQAguqDoAEQVB8EDYCg+iBoAATVB0EDIKg+3DwsgC8oaMAIGoARVB8EDYCg+iBoAATVB0EDIKg+CBoAQfVB0AAIqg+CBkBQfRA0AILqg6ABEFQfBA2AoPogaAAE1QdBAyCoPggaAEH1QdAACKoPggZAUH0QNACC6oOgARBUHwQNgKD6IGgABNUHQQMgqD4IGgBB9UHQAAiqD4IGQFB9EDQAguqDoAEQVB8EDYCg+iBoAATVB0EDIKg+CBoAQfVB0AAIqg+CBkBQfRA0AILqg6ABEFQfBA2AoPogaAAE1QdBAyCoPggaAEH1QdAACKoPggZAUH0QNACC6oOgARBUHwQNgKD6IGgABNUHQQMgqD4IGgBB9UHQAAiqD4IGQFB9EDQAguoTFvT1wvCsXfzoVVOes08yxh4LguqzeQR9+/iNeXn5zCnL2ScZY48FQfXZKOjl14fm5fq7Q6cwZ59kjD0WBNVno6CvP7Yvl0/buf7disyNKgVfUNBgk6DNALo8/+LQGUVz/tJmjD0WRlB9NgnaHIHWrI5Dc/ZJxthjQVB9Ngn68om7gqDlcb8FXc3qZiS9/p7LTOVxvwWtD0HPv3xlroN+uDqRz9knGWOPBUH14S9JARBUHwQNgKD6IGgABNUHQQMgqD4IGgBB9UHQAAiqD4IGQFB9EDQAguqDoAEQVB8EDYCg+iBoAATVB0EDIKg+CBoAQfVB0AAIqg+CBkBQfRA0AILqg6ABEFQfBA2AoPogaAAE1QdBAyCoPggaAEH1QdAACKoPggZAUH0QNACC6oOgARBUHwQNgKD6IGgABNUHQQMgqD4IGgBB9UHQAAiqD4IGQFB9EDQAguqDoAEQVB8EDYCg+iBoAATVB0EDIKg+CBoAQfVB0AAIqg+CBkBQfRA0AILqg6ABEFQfBA2AoAFOH7w4e+8gSp8xIGgABA1QCRrlzkgQNACCBkBQfRBU4GJ3tvXbeoo/257NZjt1sV3eWy6v9mezSt+z976tCnZM6V79c1uwt2w38is0WyUR9J7gCwotF7s71f9W0IvdSq3j2it7SHq2vXe1P6/KHp6cbT88WR7PzD9Nhe16ud3Iq9ButfZejKABGEH7sbP7sRX0ryetmdXL+y+6H1cSVq5aYbsKzXK7kVeh3QpBh4Og/dhxrtLRendazdZb9dn80Ww2Nz+eWXbqEXX1j7tcb+RVaLdC0OEg6EZBL3YrObvLTdXB6YMX7TwtCtpu5At6Y3ZH0E0gaD92Nq6vg54arU63uuuh1STdroqCtht5FdwgCDoMBO3nYnfeniQZrc62a7est1XZ1X4l4Lp/nqDNRl6FdisEHQ6CioauLjNVx51bv9utztx3usNRc8Gonfk7/3a6gmYj3+BmKwQdDoLqg6ABEFQfBA2AoPogaAAE1QdBAyCoPggaAEH1QdAACCrwlz7+FC1hCAQNgKACCFoGCCqAoGWAoAIIWgYIKoCgZYCgAghaBggqgKBlgKACIUHbxI+BXO2vJ3n4IGgABBUICHrak5kZAkEngKACsqBHW9+2I+hpnUVss0Dsy8/+8cAMryZX5NFvbKaxKfxsb9klJiPoKBB0tKDdFH/xyxfL43ml7E77Yr5k3wi6Xa09PLGFs72LTw/kAwMEDYCgUwT99KB9qVw1ul59sxK0frGF9RRvFhF0LAgaKajNP64m7q0DM4vbDONHJzcFtS4f7dl8ZenIFUEDIGikoC3VNN4MjaER1NytgSk+BgSdIKg5xmyPM5uXrQMz4ZtbktSCNsegdk26kyOCBkDQCYK287bJAD2wL3/7zYG568gvfrkS9GrfnsVXheYFQceCoBGCyoy8hF+DoAEQVGC8oP1J7wNA0AAIKhA3gkaBoAEQVABBywBBBRC0DBBU4E+9REsYAkEDIKg+CBoAQQX+tw9G0FsHQQUQtAwQVEBLUPv4GvmLJR05+yRj7LEgqICSoFf7O813SzaRs08yxh4LggooCWrUbL57soGcfZIx9lgQVEBR0OP5kIcw5uyTjLHHgqACWsegR9ZO4YE1Ljn7JGPssSCogCyo82DOmO8u3cQT1DyJ4WjIl05y9knG2GNBUAFRUJv/5j8YcSJcZgqAoAKioKfmUYgmy6jONq5Tjs8++Mwubh0EE4wRdDQIOlZQQ5PO2aR0HM/t42JN8ubpwx9CCcYbBK3OkGwCHtdBOxA0QlD7SK9a0CbluE3waESTEow3CNrP68Vi8dErs3T5dPH4DYKWR2GCmmfJ27RjI2iTcmwEfVSfeQcSjKMEffmsWbh+/mz5+mMELY+yBLVPf7c0acX1UjOCBhOMBwhqRuer/XlXcP3dYbN0+etXy/MvXyFocRQlaOfnKq344Umdv2nU/EMowXiAoEdza2lnaDWvLxZ2ED3/6s3y8muj67sVY97hp4XX5b6gsEIU9NiexFhJr/ZXp+7vr7KPQwnG/az/JWm5dP+SdP7FYTOKvn3cCmrI+UubMfYAAoLqNkykqBE0PWFBLfY4tBtBDTn7JGPsASCoF1tASVBzU5LmNMzFCnpfjkER1IstoCWofSL9zPHTTOzX3xstr58/uRdn8QjqxRZQE/QGrxeLDw/t0HlProMiqBdboBxBBXL2ScbYA0BQL7aAVtoxKR8I6sfWx0/5mIv1fHL2ScbYA0BQL7bAO33c2mWmAeTsk4yxB4CgXmwBJUE3PbKmI2efZIw9AAT1YgsoCTokG6kmZ59kjD0ABPViC6hN8XwfFEG92AJaI+hgcvZJxtgDQFAvtgCCqoGgXmwBNUGPZ7O9AVnHCFoQZQl6uvkIcdw3lv3vgz78YXdvyNXQnH2SMfYAENSLLSAKauQ73uBPvKA2b27vft9ZBEG92ALBKX71sE77ZKQ236NOOD774DN7Fj48/RhBfRDUix0jaDOCmvyh49XzjZsnGpuUkG5trKDLYzPF3/g+KIIi6HBBz7abO9OYjLlKRCfn2M9AHph+HP4+KIIi6EhB7Y0bbNqx93zjJuHYXxsv6FBy9knG2ANAUC92jKD1rW/WRtAm4dhfQ9DxIKgXe6yg5t6yza1v7H1v/Ocbv+c9jntY+jF/6vRBUC/2WEHNlfT27oiVTj//tH2+cZNwXKfIP3gxPP345gja/gIgKIKOF3S8SxvomeLv9S3AEdSLLaAsKFM8gjaxBYYKmoAeQY8YQRG0iS2gJGhzknSvbwGOoF5sAd0RdAA5+yRj7AEgqBdbgKcdq4GgXmx9+q6Dbr4UmrNPMsYeAIJ6sQX+ro/bSJozh598WQRBV7EFlAQVbr/YQ84+yRh7AAjqxRZAUDUQ1IstoDXF998ftIecfZIx9gAQ1IstoCVofYvxAX/Dz9knGWMPAEG92AJqgg4lZ59kjD0ABPViCyCoGgjqxRYICdp/h6/u68lTnpNEXjyC+rEFQoIebzhGnCIoefEI6scWCAh69kH7RWQv7dj89+g31fhnH4A84qHHpB37RAj6Z5fbbGtNWYJeffP7Zor3045tynH73LkRWccIugaCerFHC3q80x6D+klzXcLcuKxj8uLXQFAv9lhBzx6dGEFvph2vCTr8ocfkxfsgqBd7rKD1szqtQYERdMxDj7nM5IOgXuyxgi6dy0zracdrqg586DH3qPdBUC/2FEG9tONO0HFZxzzlYw0E9WJHCOqSOqtzyDV6S84+yRh7AAjqxRZQEpQ7iyDoWmyBoYImgJMkHwT1YgtoCNpcpR9Gzj7JGHsACOrFFihe0LtLQFAJT9BbbKoiKmnHx0NTOpeMoB73cAS9RbjM5IOgXmyBT/rgJOk2QFAvtgCCqoGgXmwBBFUDQb3YAgiqBoJ6sQUQVA0E9WILIKgaCOrFFkBQNRDUiy0gC3ocuo4+MqHTgqA+COrFFpAFPQpdSkfQ6SCoF1tAFPTqm+77dc2j422esf16/c9HZhwjaA8I6sUeK6j9xmaX1WkefGzUnFdr/2O/Vj8m4xhBe0BQL/ZYQU2mUTOKNl9WNi/W1dnOyOccI2gfCOrFHiuo5WjPpB0vq8l866AeU6tXo+7IjGME7QFBvdiRgrZLpw9P2uHy6Ffzkc85RtA+ENSLPVZQ8xjNq3970chp/z+qb3jz6Ed7E4cxGccI2gOCerHHCuo+7fhodRa/dWBykU8f/jgu4xhBe0BQL/ZoQZODoD4I6sUWQFA1ENSLLYCgaiCoF1sAQdVAUC+2AIKqgaBebAGedqwGgnqx9UFQHwT1Ygv8uQ9G0NsAQb3YAgiqBoJ6sQUQVA0E9WILIKgaCOrFFkBQNRDUiy2AoGrIgnr3wnQ3ySboX27yzk167tSZrAXS/kdQNRDURdr/sqBX+6uv2/ncSPcc+EwZBPVBUBdp/8uCHu3ZbynfBEHTgKAu0v4XBXXz4Zq04ybP+OhX9qVZu9i1X1uuU5IRdAQI6jJaUPPI7WaKb9KO2zzjI+85xyYPpBK1TgdB0BEgqMt4Qbf3zANlraDdM5KMq2aKr6f5as0UVFN88zhPBB0BgrqMF7SSs1LOSTtuc5P++6AW1K7V+cd75sW9FwmCbgZBXUYLevFPJ+6YaNKOmzzjSk4zZtZrjKDRIKjLaEGNh80U36Qdt3nGR/Olk3XMMWgsCOoyXlDnvLxJO27yjKuzeDPhN2tX+5zFx4GgLuMFTQ6C+iCoi7T/EVQNBHWR9j+CqoGgLtL+R1A1ENRF2v8IqgaCukj7n7RjNRDUJbFsMWwQ9PzzxeKZXXq9WCw+etUUJ+uBnj7JGHsACOqS171BhAW9/Ppwef7FoVl8+cwpT9YDPX2SMfYAENQlp3kDCQv69uNlo+b1d4dOebIe6OmTjLEHgKAuOc0byOZjUDOKVv8+XTST/bsVuVulx0BB3U08QVO2JVrQlI3QZqOg18+fmBcz0XejaLJf0Z5f2oyxB8AI6pJVvWFsEvTy6ZNuZXUcmqwHevokY+wBIKhLLutGsPEs3j03QlAEvW3CgnZ+vn38Znn9PZeZEPSWCQtqLn5W50bnX74yix+uTuST9UBPn2SMPQAEdcmu32b4S5IPgrokli0GBPVBUJfEssWAoD4I6pJYthgQ1AdBXRLLFgOC+iCoS2LZYkBQHwR1SSxbDAjqg6AuiWWLAUF9ENQlsWwxIKgPgrokli0GBPVBUJfEssWAoD4I6pJYthgQ1AdBXRLLFgOC+iCoS2LZYkBQHwR1SSxbDAjqg6AuiWWLAUF9EQYK+okDguYEQRFUJrFsMSAogsokli0GBEVQmcSyxYCgCCqTWLYYEBRBZRLLFgOCIqhMYtliQFAElUksWwwIiqAyiWWLAUERVCaxbDEgKILKJJYtBgRFUJnEssWAoAgqk1i2GBAUQWUSyxYDgiKoTGLZYkBQBJVJLFsMCIqgMolliwFBEVQmsWwxICiCyiSWLQYERVCZxLLFgKAIKpNYthgQFEFlEssWA4IiqExi2WJAUASVSSxbDAiKoDKJZYsBQRFUJrFsMSAogsokli0GBEVQmcSyxYCgCCqTWLYYEBRBZRLLFkOcoHeLlILmatcoQVM2QhtGUEZQmcSyxYCgCCqTWLYYEBRBZRLLFgOCIqhMYtliQFAElUksWwwIiqAyiWWLAUERVCaxbDEgKILKJJYtBgRFUJnEssWAoAgqk1i2GG5R0J7+7rNCNMQl2S5Yb9idEPSTHqJakFi2GBAUQWUSyxYDgiKoTGLZYkBQBJVJLFsMCIqgMolliwFBEVQmsWwxICiCyiSWLQYERVCZxLLFgKAIKpNYthgQFEFlEssWA4IiqExi2WJAUASVSSxbDAiKoDKJZYsBQRFUJrFsMSAogsokli0GBEVQmcSyxYCgCCqTWLYYEBRBZRLLFgOCIqhMYtliQFAElUksWwwIiqAyiWWLAUERVCaxbDEgKILKJJYtBgRFUJnEssWAoAgqk1i2GBAUQWUSyxYDgiKoTGLZYkBQBJVJLFsMCIqgMolliwFBEVQmsWwxICiCyiSWLQYERVCZxLLFgKAIKpNYthgQFEFlEssWA4IiqExi2WJAUASVSSxbDAiKoDKJZYsBQRFUJrFsMWwQ9PLp4vGbtaUlgiLorREW9Pr5s+Xrj/0lQ6r+RtCh7ULQXi5//Wp5/uUrb8mQqr8RdGi7ELSX86/eLC+/PvSW3q24laYBbBL07eNWy27JkHKcWP+lzRh7EqU2LOvO0Gf8CGrI2ScZY0+i1Ibda0GTHoMO7JOMsSdRasPutaDXz5+szuKfTD2LH9gnGWNPotSG3WtBm6ufZuicfh10YJ9kjD2JUht2vwUVyNknGWNPotSGIWgPOfskY+xJlNowBO0hZ59kjD2JUhuGoD3k7JOMsSdRasMQtIecfZIx9iRKbRiC9pCzTzLGnkSpDUPQHnL2ScbYkyi1YQjaQ84+yRh7EqU2DEF7yNknGWNPotSGIWgPOfskY+xJlNowBO0hZ59kjD2JUhuGoD3k7JOMsSdRasMQ9HYp9tv6pTas1HYlAkGHUmrDSm1XIhB0KKU2rNR2JQJBh1Jqw0ptVyKKExTABUGhaBAUigZBoWgQFIqmBEHPP18snjn3z2vy7839ynTpbdjrxWLx0atNm95+u66fLz483LTlT48CBDU3LDn/4nB1/7y3zf5/vVAWtL9hL7V/beR2ve0Sw+8MBQj61nTyy2ftvUtefvifdgQ9/+d/UVaht2HX36kPU73tMmt3kQIENVSDgnMfKDtjffdf6lP8sqdh1by60B7a+9p1/tV/MMVnw9xYp7t/Xn2o90T/GLSvYdXcWsAo2tOuz5/ZO7zdNYoQ9PLpE+9OenZAeFOAoD0Ns2gfh/Z3mHP7wbtDCYKaX373/nnmX3OuvFg8Ka9hFmVB+9p1+a8Imom6u53755Vymam3YWZivf5e9YSkv8NeMsVnoh4sn5V3HbS/YVWp8slIf7uqNeXLs1koQFAAGQSFokFQKBoEhaJBUCgaBIWiQVAoGgSFornngp4+eHH23kFfsUJjoAcEHVEMtw+CjiiG2+ceC3qxO9v6bT3Fn23PZrMdr9grs8t7y+XV/mxmfvTet1XBjindW7YV68JuHZJwfwW92N2p/reCXuxWXh3Xo2Zb7JbZw9Sz7b2r/XlV9vDkbPvhyfJ4Zv7pKtaF/oYwmfsrqJ3Gj62gfz1ZNhZ2xW7Z2fsvuk0qAStXrbC2QltxfV3pY9017q+g1Uho1bMunVaz8taBW+yWLY9ms7n52cyyU4+oq3/qiuvrmp/tDoGgdoqvfGoGvbbYLVvaI9MHL+zPlq6bzsbr61qf645xfwW183V9HfTUiHe6deAWu2WWampvVz1B24rr6zqf6s5xfwW92J23J0lGp7Pt2qm22C2z0lb1rvYr+U7d2dzZeH1d99PdGe6voO5lpuoYc+t35uy7K/bK2qNKc5mpncBX/zQV19c1P9od4h4LCj8FEBSKBkGhaBAUigZBoWgQFIoGQaFo/h8vvNCwF0d/EwAAAABJRU5ErkJggg==" /><!-- --></p>
 <p>Agora vamos utilizar o pacote data.table que foi concebido para facilitar a tabulacao dos dados. Neste pacote podemos acessar rapidamente um subconjunto de dados, agrupa-los, atualiza-los, produzir tabelas. Para instalar o pacote use: install.packages(“data.table”)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(&quot;data.table&quot;)</span>
-<span class="kw">library</span>(data.table)
-dt=<span class="kw">data.table</span>(dados)
-<span class="co">#Numero de linhas</span>
-dt[,.N]
-<span class="co">#Variaveis do banco de dados</span>
-<span class="kw">names</span>(dt)
-<span class="co">#Quantos niveis distintos em cada variavel:</span>
-<span class="kw">sapply</span>(dt,<span class="cf">function</span>(x) <span class="kw">length</span>(<span class="kw">unique</span>(x)))
-<span class="co">#Quantos assaltos por bairro h??</span>
-dt[,.N,by=Bairro][<span class="kw">order</span>(<span class="op">-</span>N)]
-<span class="co">#Os cinco bairros com maior ocorrencia de assalto</span>
-<span class="kw">head</span>(dt[,.N,<span class="dt">by=</span>Bairro][<span class="kw">order</span>(<span class="op">-</span>N)],<span class="dv">5</span>)
-<span class="co">#Criar um codigo de area e listar as areas com maior ocorrencia( ex. CEP)</span>
-dt[,.N,by=CEP][<span class="kw">order</span>(<span class="op">-</span>N)]
-<span class="co">#Simulando as ocorrencias de um universo de 1000 assaltos por amostragem sobre os dados</span>
-dt[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>.N,<span class="dv">1000</span>, <span class="dt">replace=</span>T), .(<span class="dt">mean=</span><span class="kw">mean</span>(.N)), by=Bairro][<span class="kw">order</span>(<span class="op">-</span>mean)]
-<span class="co">#Contagem de assaltos por data</span>
-dt[,.N,by=<span class="kw">substr</span>(DT.Assalto,<span class="dv">1</span>,<span class="dv">10</span>)][<span class="kw">order</span>(<span class="op">-</span>N)]
-<span class="co">#Contagem de assaltos por hora</span>
-dt[,.N,by=<span class="kw">substr</span>(H.Assalto,<span class="dv">11</span>,<span class="dv">15</span>)][<span class="kw">order</span>(<span class="op">-</span>N)]
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dt=<span class="kw">data.table</span>(dados)
 
-<span class="co">#Numero de ocorrencia cuja vitima possue 2o grau</span>
-dt[<span class="kw">like</span>(G_Instru??o.vitima,<span class="st">&quot;2&quot;</span>),.N]
-dt[<span class="kw">like</span>(G_Instru??o.vitima,<span class="st">&quot; &quot;</span>),.N] <span class="co">#sem informacao</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(dplyr)
-<span class="co">#Quantos bairros distintos h??</span>
+<span class="co">#Numero de linhas</span>
+dt[,.N]</code></pre></div>
+<pre><code>## [1] 38</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Variaveis do banco de dados</span>
+<span class="kw">names</span>(dt)</code></pre></div>
+<pre><code>##  [1] &quot;RO&quot;                 &quot;SIAPRO&quot;             &quot;DT.Assalto&quot;        
+##  [4] &quot;ano&quot;                &quot;dia.semana&quot;         &quot;mês&quot;               
+##  [7] &quot;H.Assalto&quot;          &quot;Logradouro&quot;         &quot;Bairro&quot;            
+## [10] &quot;Mun&quot;                &quot;CEP&quot;                &quot;Latitude&quot;          
+## [13] &quot;Longitude&quot;          &quot;Veiculo.assaltante&quot; &quot;N.Assaltantes&quot;     
+## [16] &quot;Fisico&quot;             &quot;Cabelo&quot;             &quot;Nasc.vitima&quot;       
+## [19] &quot;Sexo.vitima&quot;        &quot;Naturalidade&quot;       &quot;G_Instrução.vitima&quot;
+## [22] &quot;Veiculo.vitima&quot;     &quot;Sedex&quot;              &quot;PAC&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Quantos niveis distintos em cada variavel:</span>
+<span class="kw">sapply</span>(dt,<span class="cf">function</span>(x) <span class="kw">length</span>(<span class="kw">unique</span>(x)))</code></pre></div>
+<pre><code>##                 RO             SIAPRO         DT.Assalto 
+##                 38                 38                 38 
+##                ano         dia.semana                mês 
+##                  3                  6                 11 
+##          H.Assalto         Logradouro             Bairro 
+##                 28                 38                 23 
+##                Mun                CEP           Latitude 
+##                  3                 29                 38 
+##          Longitude Veiculo.assaltante      N.Assaltantes 
+##                 38                  8                  4 
+##             Fisico             Cabelo        Nasc.vitima 
+##                 31                  8                 14 
+##        Sexo.vitima       Naturalidade G_Instrução.vitima 
+##                  5                  7                  5 
+##     Veiculo.vitima              Sedex                PAC 
+##                  6                 24                 22</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Quantos assaltos por município?</span>
+dt[,.N,by=Mun][<span class="kw">order</span>(<span class="op">-</span>N)]</code></pre></div>
+<pre><code>##            Mun  N
+## 1: São Gonçalo 33
+## 2:        Magé  3
+## 3:     Niterói  2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Quantos assaltos por bairro?</span>
+dt[,.N,by=Bairro][<span class="kw">order</span>(<span class="op">-</span>N)]</code></pre></div>
+<pre><code>##                Bairro N
+##  1:   Jardim Catarina 8
+##  2:      Vista Alegre 4
+##  3:          Trindade 2
+##  4:        Mutuaguaçú 2
+##  5:    Barro Vermelho 2
+##  6:             Mutuá 2
+##  7:            Gradim 2
+##  8:           Paraíso 1
+##  9:          Caramujo 1
+## 10:    Porto da Pedra 1
+## 11:         Vila Rica 1
+## 12:           Piabetá 1
+## 13:            Coelho 1
+## 14:           Mutondo 1
+## 15:             Boaçu 1
+## 16:             Rocha 1
+## 17:      Lindo Parque 1
+## 18:           Camarão 1
+## 19:       Nova Cidade 1
+## 20:      Parque Iriri 1
+## 21:           Barreto 1
+## 22: Jardim Bom Retiro 1
+## 23:         Alcântara 1
+##                Bairro N</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Os seis bairros com maior ocorrencia de assalto</span>
+<span class="kw">head</span>(dt[,.N,<span class="dt">by=</span>Bairro][<span class="kw">order</span>(<span class="op">-</span>N)])</code></pre></div>
+<pre><code>##             Bairro N
+## 1: Jardim Catarina 8
+## 2:    Vista Alegre 4
+## 3:        Trindade 2
+## 4:      Mutuaguaçú 2
+## 5:  Barro Vermelho 2
+## 6:           Mutuá 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Criar um codigo de area e listar as areas com maior ocorrencia (ex. CEP)</span>
+dt[,.N,by=CEP][<span class="kw">order</span>(<span class="op">-</span>N)]</code></pre></div>
+<pre><code>##           CEP N
+##  1:           9
+##  2: 24715-170 2
+##  3: 24715-421 1
+##  4: 24431-740 1
+##  5: 23140-316 1
+##  6: 24457-170 1
+##  7: 24715-220 1
+##  8: 24436-640 1
+##  9: 24461-260 1
+## 10: 25900-000 1
+## 11: 25931-802 1
+## 12: 24461-230 1
+## 13: 24715-445 1
+## 14: 24422-770 1
+## 15: 24420-380 1
+## 16: 24435-690 1
+## 17: 24457-550 1
+## 18: 24415-560 1
+## 19: 24430-280 1
+## 20: 24450-220 1
+## 21: 24724-130 1
+## 22: 24431-050 1
+## 23: 24715-441 1
+## 24: 24461-050 1
+## 25: 24110-813 1
+## 26: 24723-540 1
+## 27: 24710-610 1
+## 28: 24724-565 1
+## 29: 24715-420 1
+##           CEP N</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Simulando as ocorrencias de um universo de 1000 assaltos por amostragem sobre os dados</span>
+dt[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>.N,<span class="dv">1000</span>, <span class="dt">replace=</span>T), .(<span class="dt">mean=</span><span class="kw">mean</span>(.N)), by=Bairro][<span class="kw">order</span>(<span class="op">-</span>mean)]</code></pre></div>
+<pre><code>##                Bairro mean
+##  1:   Jardim Catarina  221
+##  2:      Vista Alegre   97
+##  3:        Mutuaguaçú   57
+##  4:          Trindade   56
+##  5:    Barro Vermelho   56
+##  6:             Mutuá   53
+##  7:            Gradim   52
+##  8:            Coelho   34
+##  9:             Rocha   33
+## 10:      Lindo Parque   32
+## 11:           Barreto   31
+## 12:           Camarão   30
+## 13:           Paraíso   29
+## 14:    Porto da Pedra   29
+## 15:             Boaçu   27
+## 16:       Nova Cidade   26
+## 17:      Parque Iriri   22
+## 18: Jardim Bom Retiro   21
+## 19:         Alcântara   21
+## 20:           Piabetá   20
+## 21:           Mutondo   18
+## 22:          Caramujo   18
+## 23:         Vila Rica   17
+##                Bairro mean</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Contagem de assaltos por mês</span>
+dt[,.N,by=<span class="kw">substr</span>(mês,<span class="dv">1</span>,<span class="dv">12</span>)][<span class="kw">order</span>(<span class="op">-</span>N)]</code></pre></div>
+<pre><code>##     substr N
+##  1:      1 8
+##  2:     12 6
+##  3:      9 4
+##  4:     10 3
+##  5:      5 3
+##  6:      6 3
+##  7:     11 3
+##  8:      2 3
+##  9:      8 2
+## 10:      3 2
+## 11:      7 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Contagem de assaltos por dia da semana</span>
+dt[,.N,by=<span class="kw">substr</span>(dia.semana,<span class="dv">1</span>,<span class="dv">7</span>)][<span class="kw">order</span>(<span class="op">-</span>N)]</code></pre></div>
+<pre><code>##    substr  N
+## 1:      3 13
+## 2:      1  6
+## 3:      2  6
+## 4:      4  6
+## 5:      6  4
+## 6:      5  3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Contagem de assaltos por data</span>
+dt[,.N,by=<span class="kw">substr</span>(DT.Assalto,<span class="dv">1</span>,<span class="dv">10</span>)][<span class="kw">order</span>(<span class="op">-</span>N)]</code></pre></div>
+<pre><code>##         substr N
+##  1: 06/01/2016 1
+##  2: 28/10/2015 1
+##  3: 30/12/2015 1
+##  4: 09/05/2015 1
+##  5: 20/06/2015 1
+##  6: 28/11/2015 1
+##  7: 26/10/2015 1
+##  8: 17/08/2015 1
+##  9: 18/08/2015 1
+## 10: 21/10/2015 1
+## 11: 24/09/2015 1
+## 12: 11/12/2015 1
+## 13: 09/12/2015 1
+## 14: 11/01/2016 1
+## 15: 12/02/2016 1
+## 16: 02/03/2016 1
+## 17: 18/01/2016 1
+## 18: 28/01/2016 1
+## 19: 23/09/2015 1
+## 20: 22/09/2014 1
+## 21: 12/06/2015 1
+## 22: 16/12/2015 1
+## 23: 10/11/2015 1
+## 24: 16/12/2014 1
+## 25: 25/02/2016 1
+## 26: 13/01/2015 1
+## 27: 14/01/2015 1
+## 28: 31/03/2015 1
+## 29: 21/01/2016 1
+## 30: 16/05/2016 1
+## 31: 18/05/2016 1
+## 32: 18/06/2015 1
+## 33: 12/11/2015 1
+## 34: 23/12/2015 1
+## 35: 10/09/2014 1
+## 36: 15/07/2015 1
+## 37: 10/01/2015 1
+## 38: 10/02/2015 1
+##         substr N</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Contagem de assaltos por hora</span>
+dt[,.N,by=<span class="kw">substr</span>(H.Assalto,<span class="dv">1</span>,<span class="dv">24</span>)][<span class="kw">order</span>(<span class="op">-</span>N)]</code></pre></div>
+<pre><code>##     substr N
+##  1:  14:00 4
+##  2:  11:45 3
+##  3:  12:00 2
+##  4:  11:50 2
+##  5:  13:00 2
+##  6:  14:15 2
+##  7:  14:50 2
+##  8:  13:40 1
+##  9:  13:30 1
+## 10:  15:00 1
+## 11:  14:40 1
+## 12:  11:30 1
+## 13:  14:30 1
+## 14:  15:20 1
+## 15:  16:45 1
+## 16:        1
+## 17:  13:45 1
+## 18:  10:40 1
+## 19:  16:10 1
+## 20:  11:00 1
+## 21:  14:20 1
+## 22:  10:25 1
+## 23:  15:30 1
+## 24:  13:20 1
+## 25:  13:10 1
+## 26:  12:30 1
+## 27:  09:50 1
+## 28:  11:40 1
+##     substr N</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Quantos bairros distintos?</span>
 dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Bairro) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>()
-<span class="co">#Quantos graus de instrucao distintos h??</span>
-dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(G_Instru??o.vitima) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>()
-<span class="co">#Quantas ocorrencias em cada Bairro h??</span>
+<span class="co">#Quantas ocorrencias em cada Bairro?</span>
 <span class="co">#modo1</span>
 dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Bairro) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">ocorrencia=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(ocorrencia))
 <span class="co">#modo2</span>
 dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(Bairro,<span class="dt">sort=</span><span class="ot">TRUE</span>)
 <span class="co">#Quais variaveis possuem dados em branco e quantas celulas em branco temos por variavel:</span>
-<span class="co">#modo1</span>
-<span class="kw">sapply</span>(dt,<span class="cf">function</span>(x) <span class="kw">sum</span>(<span class="kw">is.na</span>(x)))
-<span class="co">#modo2</span>
-dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sapply</span>(<span class="cf">function</span>(x) <span class="kw">sum</span>(<span class="kw">is.na</span>(x)))
-
-<span class="kw">require</span>(RgoogleMaps)
+<span class="kw">sapply</span>(dt,<span class="cf">function</span>(x) <span class="kw">sum</span>(<span class="kw">is.na</span>(x)))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(RgoogleMaps)
 
 caixa &lt;-<span class="st"> </span><span class="kw">qbbox</span>(<span class="dt">lat=</span>dados<span class="op">$</span>Latitude<span class="op">/</span><span class="dv">10</span><span class="op">^</span><span class="dv">6</span>, <span class="dt">lon=</span>dados<span class="op">$</span>Longitude<span class="op">/</span><span class="dv">10</span><span class="op">^</span><span class="dv">6</span>)
 map &lt;-<span class="st"> </span><span class="kw">GetMap.bbox</span>(caixa<span class="op">$</span>lonR, caixa<span class="op">$</span>latR, <span class="dt">destfile =</span> <span class="st">&quot;r_outtile3.png&quot;</span>, <span class="dt">maptype=</span><span class="st">&quot;satellite&quot;</span>)
