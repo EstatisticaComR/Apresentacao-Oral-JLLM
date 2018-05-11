@@ -1,8 +1,8 @@
 ---
-title: 'Mapa da Criminalidade: alvo correios'
+title: 'Mapa da Criminalidade: Correios'
 author: "Luciane Ferreira Alcoforado"
 date: "8 de julho de 2016"
-#output: word_document
+#output: html_document
 output:
   prettydoc::html_pretty:
     theme: cayman
@@ -16,30 +16,28 @@ output:
 library(leaflet)
 library(data.table)
 library(tidyverse)
-dados=read.csv(file="http://bit.ly/bancodedadosCorreios", encoding = "UTF-8")
+dados <- read.csv(file="http://bit.ly/bancodedadosCorreios", encoding = "UTF-8")
 ```
 
-```{r, eval  = F}
-dados=read.csv(file="base_de_dados_em_sigilo", encoding = "UTF-8")
+```{r, eval=F}
+dados=read.csv(file="base_de_dados_em_sigilo")
 ```
 
 ```{r}
-head(dados)
-dim(dados)
-str(dados)
-attach(dados)
-summary(Latitude)
+as_tibble(dados)
 summary(dados)
 ```
 
 Como os registros estao distribuidos por ano:
-```{r}
+```{r, eval=F}
 #Separando por ano
-danos <- dados %>% count(ano) %>% filter(ano!=2013)
-ano <- as.factor(2014:2016)
-freq <- c(danos)
+dAnos <- dados %>% count(ano) %>% filter(ano!=2013)
+ano <- dAnos %>% 
+  pull(ano) %>% 
+  as.factor()
+freq <- dAnos %>% pull(n) #pull seleciona coluna e retorna como vetor
 
-#data.frame(ano, freq, perc=round(100*freq/sum(freq),1))
+data.frame(ano, freq, perc=round(100*freq/sum(freq),1))
 p <- ggplot(data=data.frame(ano,freq),aes(x=ano, y=freq, fill=as.factor(freq)))+
   geom_bar(stat="identity", width=0.5,position="dodge")+
   labs(x="ano", y= "frequencia", title="Número de Assaltos aos Correios") 
@@ -47,7 +45,7 @@ p
 ```
 
 Cabe ressaltar que os registros de 2014 e 2016 sao parciais.
-```{r, eval  = F}
+```{r}
 #Separando por dia da semana
 dadosseg=dados[dados$dia.semana==1,]
 dadoster=dados[dados$dia.semana==2,]
@@ -61,13 +59,15 @@ dia=c("1.seg","2.ter", "3.qua", "4.qui", "5.sex", "6.sab","7.dom")
 freq1=c(length(dadosseg$dia.semana),length(dadoster$dia.semana),length(dadosqua$dia.semana),length(dadosqui$dia.semana),length(dadossex$dia.semana),length(dadossab$dia.semana),length(dadosdom$dia.semana))
 data.frame(dia,freq1,perc=round(100*freq1/sum(freq1),1))
 
-p1=ggplot(data=data.frame(dia,freq1),aes(x=dia, y=freq1,fill=as.factor(freq1)))+
+p1=ggplot(data=data.frame(dia,freq1),aes(x=dia, y=freq1, fill=as.factor(freq1)))+
   geom_bar(stat="identity", width=0.5,position="dodge")+
   labs(x="dia da semana", y= "frequencia", title="Numero de Assaltos aos Correios") 
 p1
+
 #Eliminando os dados faltantes do banco de dados, criando o banco dados1
 ind=is.na(dados$dia.semana)
 dados1=dados[ind==FALSE,]
+
 #criando correspondencia entre dia da semana e o nome:
 sem=1:7
 nome.sem=c("1-segunda", "2-terca", "3-quarta", "4-quinta", "5-sexta", "6-sabado", "7-domingo")
@@ -85,51 +85,49 @@ Agora vamos utilizar o pacote data.table que foi concebido para facilitar a tabu
 Neste pacote podemos acessar rapidamente um subconjunto de dados, agrupa-los, atualiza-los, produzir tabelas.
 Para instalar o pacote use: install.packages("data.table")
 
-```{r, eval  = F}
-#install.packages("data.table")
-library(data.table)
+```{r}
+
 dt=data.table(dados)
+
 #Numero de linhas
 dt[,.N]
 #Variaveis do banco de dados
 names(dt)
 #Quantos niveis distintos em cada variavel:
 sapply(dt,function(x) length(unique(x)))
-#Quantos assaltos por bairro h??
+#Quantos assaltos por município?
+dt[,.N,by=Mun][order(-N)]
+#Quantos assaltos por bairro?
 dt[,.N,by=Bairro][order(-N)]
-#Os cinco bairros com maior ocorrencia de assalto
-head(dt[,.N,by=Bairro][order(-N)],5)
-#Criar um codigo de area e listar as areas com maior ocorrencia( ex. CEP)
+#Os seis bairros com maior ocorrencia de assalto
+head(dt[,.N,by=Bairro][order(-N)])
+#Criar um codigo de area e listar as areas com maior ocorrencia (ex. CEP)
 dt[,.N,by=CEP][order(-N)]
 #Simulando as ocorrencias de um universo de 1000 assaltos por amostragem sobre os dados
 dt[sample(1:.N,1000, replace=T), .(mean=mean(.N)), by=Bairro][order(-mean)]
+#Contagem de assaltos por mês
+na.omit(dt[,.N,by=substr(mês,1,12)][order(-N)])
+#Contagem de assaltos por dia da semana
+na.omit(dt[,.N,by=substr(dia.semana,1,7)][order(-N)])
 #Contagem de assaltos por data
-dt[,.N,by=substr(DT.Assalto,1,10)][order(-N)]
+na.omit(dt[,.N,by=substr(DT.Assalto,1,10)][order(-N)])
 #Contagem de assaltos por hora
-dt[,.N,by=substr(H.Assalto,11,15)][order(-N)]
-
-#Numero de ocorrencia cuja vitima possue 2o grau
-dt[like(G_Instru??o.vitima,"2"),.N]
-dt[like(G_Instru??o.vitima," "),.N] #sem informacao
+na.omit(dt[,.N,by=substr(H.Assalto,1,24)][order(-N)])
 ```
 
 ```{r, eval  = F}
-require(dplyr)
-#Quantos bairros distintos h??
+#Quantos bairros distintos?
 dt %>% select(Bairro) %>% distinct() %>% nrow()
-#Quantos graus de instrucao distintos h??
-dt %>% select(G_Instru??o.vitima) %>% distinct() %>% nrow()
-#Quantas ocorrencias em cada Bairro h??
+#Quantas ocorrencias em cada Bairro?
 #modo1
 dt %>% group_by(Bairro) %>% summarize(ocorrencia=n()) %>% arrange(desc(ocorrencia))
 #modo2
 dt %>% count(Bairro,sort=TRUE)
 #Quais variaveis possuem dados em branco e quantas celulas em branco temos por variavel:
-#modo1
 sapply(dt,function(x) sum(is.na(x)))
-#modo2
-dt %>% sapply(function(x) sum(is.na(x)))
+```
 
+```{r, eval=F}
 require(RgoogleMaps)
 
 caixa <- qbbox(lat=dados$Latitude/10^6, lon=dados$Longitude/10^6)
@@ -149,7 +147,5 @@ map <- get_map(location = 'BR', zoom = 4)
 ggmap(map)
 TC <-ggmap(map)+geom_point(data=mapdata,alpha = .7, aes(x=longitude, y=latitude,size =Home.Insurance),color='red')+ggtitle("Average Home Insurance By City($)")
 TC
-
-
-
 ```
+
