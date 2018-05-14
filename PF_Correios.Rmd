@@ -26,6 +26,9 @@ dados <- read.csv(file="base_de_dados_em_sigilo")
 ```{r}
 as_tibble(dados)
 summary(dados)
+
+#Quais variaveis possuem dados em branco e quantas celulas em branco temos por variavel:
+sapply(dados,function(x) sum(is.na(x)))
 ```
 
 Como os registros estao distribuidos por ano:
@@ -78,7 +81,6 @@ Neste pacote podemos acessar rapidamente um subconjunto de dados, agrupa-los, at
 Para instalar o pacote use: install.packages("data.table")
 
 ```{r}
-
 dt=data.table(dados)
 
 #Numero de linhas
@@ -107,16 +109,15 @@ na.omit(dt[,.N,by=substr(DT.Assalto,1,10)][order(-N)])
 na.omit(dt[,.N,by=substr(H.Assalto,1,24)][order(-N)])
 ```
 
-```{r, eval  = F}
+```{r}
 #Quantos bairros distintos?
 dt %>% select(Bairro) %>% distinct() %>% nrow()
+
 #Quantas ocorrencias em cada Bairro?
 #modo1
 dt %>% group_by(Bairro) %>% summarize(ocorrencia=n()) %>% arrange(desc(ocorrencia))
 #modo2
 dt %>% count(Bairro,sort=TRUE)
-#Quais variaveis possuem dados em branco e quantas celulas em branco temos por variavel:
-sapply(dt,function(x) sum(is.na(x)))
 ```
 
 ```{r, eval=F}
