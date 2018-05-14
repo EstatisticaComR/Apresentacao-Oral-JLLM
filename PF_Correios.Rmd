@@ -38,10 +38,10 @@ ano <- dAnos %>%
 freq_ano <- dAnos %>% pull(n) #pull seleciona coluna e retorna como vetor
 
 data.frame(ano, freq_ano, perc=round(100*freq/sum(freq_ano),1))
-p <- ggplot(data=data.frame(ano,freq_ano),aes(x=ano, y=freq_ano, fill=as.factor(freq_ano)))+
+p1 <- ggplot(data=data.frame(ano,freq_ano),aes(x=ano, y=freq_ano, fill=as.factor(freq_ano)))+
   geom_bar(stat="identity", width=0.5,position="dodge")+
   labs(x="ano", y= "frequencia", title="Número de Assaltos aos Correios") 
-p
+p1
 ```
 
 Cabe ressaltar que os registros de 2014 e 2016 sao parciais.
@@ -49,20 +49,20 @@ Cabe ressaltar que os registros de 2014 e 2016 sao parciais.
 #Separando por dia da semana
 dados_sem <- na.omit(dados %>% count(dia.semana))
 
-dia=c("1.seg","2.ter", "3.qua", "4.qui", "5.sex", "6.sab","7.dom")
+dia <- c("1.seg","2.ter", "3.qua", "4.qui", "5.sex", "6.sab","7.dom")
 freq_dias=c(dados_sem %>% pull(n))
 data.frame(dia,freq_dias,perc=round(100*freq_dias/sum(freq_dias),1))
 
-p1=ggplot(data=data.frame(dia,freq_dias),aes(x=dia, y=freq_dias, fill=as.factor(freq_dias)))+
+p2 <- ggplot(data=data.frame(dia,freq_dias),aes(x=dia, y=freq_dias, fill=as.factor(freq_dias)))+
   geom_bar(stat="identity", width=0.5,position="dodge")+
   labs(x="dia da semana", y= "frequencia", title="Numero de Assaltos aos Correios") 
-p1
+p2
 
 #Eliminando os dados faltantes do banco de dados, criando o banco dados1
 ind=is.na(dados$dia.semana)
 dados1=dados[ind==FALSE,]
 
-#criando correspondencia entre dia da semana e o nome:
+#criando correspondencia entre dia da semana e o nome dos dias:
 sem=1:7
 nome.sem=c("1-segunda", "2-terca", "3-quarta", "4-quinta", "5-sexta", "6-sabado", "7-domingo")
 names(sem)=nome.sem
