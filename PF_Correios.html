@@ -78,141 +78,135 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <section class="main-content">
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dados=<span class="kw">read.csv</span>(<span class="dt">file=</span><span class="st">&quot;base_de_dados_em_sigilo&quot;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as_tibble</span>(dados)</code></pre></div>
-<pre><code>## # A tibble: 38 x 24
+<pre><code>## # A tibble: 229 x 24
 ##    RO     SIAPRO  DT.Assalto   ano dia.semana   mês H.Assalto Logradouro  
-##  * &lt;fct&gt;  &lt;fct&gt;   &lt;fct&gt;      &lt;int&gt;      &lt;int&gt; &lt;int&gt; &lt;fct&gt;     &lt;fct&gt;       
+##    &lt;fct&gt;  &lt;fct&gt;   &lt;fct&gt;      &lt;int&gt;      &lt;int&gt; &lt;int&gt; &lt;fct&gt;     &lt;fct&gt;       
 ##  1 9971/~ 08458.~ 06/01/2016  2016          3     1 12:00     Rua Tapuias~
 ##  2 9961/~ 08458.~ 28/10/2015  2015          3    10 13:40     Rua Laguna ~
 ##  3 9965/~ 0845.0~ 30/12/2015  2015          3    12 13:30     Rua Águas d~
-##  4 8861/~ 08458.~ 09/05/2015  2015          6     5 11:50     Rua Maria R~
-##  5 8913/~ 08458.~ 20/06/2015  2015          6     6 11:45     Rua Gerônim~
-##  6 9918/~ 08458.~ 28/11/2015  2015          6    11 11:45     Rua Ernâni ~
-##  7 9072/~ 08458.~ 26/10/2015  2015          1    10 15:00     Rua Itororó~
-##  8 773/2~ 08458.~ 17/08/2015  2015          1     8 14:40     Rua Coronel~
-##  9 774/2~ 08458.~ 18/08/2015  2015          2     8 11:30     Rua Vitorin~
-## 10 9067/~ 08458.~ 21/10/2015  2015          3    10 14:00     Estrada da ~
-## # ... with 28 more rows, and 16 more variables: Bairro &lt;fct&gt;, Mun &lt;fct&gt;,
+##  4 9064/~ 08458.~ 19/10/2015  2015          1    10 13:10     Rua Preside~
+##  5 8861/~ 08458.~ 09/05/2015  2015          6     5 11:50     Rua Maria R~
+##  6 8924/~ &quot;&quot;      29/06/2015  2015          1     6 15:00     Rua Olegári~
+##  7 &quot;&quot;     08458.~ 09/07/2015  2015          4     7 13:30     Tv. Rego Ba~
+##  8 8913/~ 08458.~ 20/06/2015  2015          6     6 11:45     Rua Gerônim~
+##  9 694/2~ 08458.~ 11/06/2015  2015          4     6 09:40     Rua Thiago ~
+## 10 8953/~ 08458.~ 23/07/2015  2015          4     7 03:10     Trevo de Ma~
+## # ... with 219 more rows, and 16 more variables: Bairro &lt;fct&gt;, Mun &lt;fct&gt;,
 ## #   CEP &lt;fct&gt;, Latitude &lt;int&gt;, Longitude &lt;int&gt;, Veiculo.assaltante &lt;fct&gt;,
 ## #   N.Assaltantes &lt;int&gt;, Fisico &lt;fct&gt;, Cabelo &lt;fct&gt;, Nasc.vitima &lt;fct&gt;,
 ## #   Sexo.vitima &lt;fct&gt;, Naturalidade &lt;fct&gt;, G_Instrução.vitima &lt;fct&gt;,
 ## #   Veiculo.vitima &lt;fct&gt;, Sedex &lt;int&gt;, PAC &lt;int&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(dados)</code></pre></div>
-<pre><code>##            RO                      SIAPRO        DT.Assalto      ano      
-##  10.057/2016: 1                       : 1   02/03/2016: 1   Min.   :2014  
-##  10008/206  : 1   0845.016301/2015-17 : 1   06/01/2016: 1   1st Qu.:2015  
-##  10034/2016 : 1   08458.000111/2016-25: 1   09/05/2015: 1   Median :2015  
-##  10051/2016 : 1   08458.000629/2016-69: 1   09/12/2015: 1   Mean   :2015  
-##  10154/2016 : 1   08458.000716/2016-16: 1   10/01/2015: 1   3rd Qu.:2016  
-##  10158/2016 : 1   08458.000783/2016-31: 1   10/02/2015: 1   Max.   :2016  
-##  (Other)    :32   (Other)             :32   (Other)   :32                 
-##    dia.semana         mês         H.Assalto 
-##  Min.   :1.000   Min.   : 1.0   14:00  : 4  
-##  1st Qu.:2.000   1st Qu.: 2.0   11:45  : 3  
-##  Median :3.000   Median : 6.5   11:50  : 2  
-##  Mean   :3.158   Mean   : 6.5   12:00  : 2  
-##  3rd Qu.:4.000   3rd Qu.:10.0   13:00  : 2  
-##  Max.   :6.000   Max.   :12.0   14:15  : 2  
-##                                 (Other):23  
-##                                    Logradouro             Bairro  
-##  Av. Paula Lemos                        : 1   Jardim Catarina: 8  
-##  Av. Presidente Trumam                  : 1   Vista Alegre   : 4  
-##  Estrada da Conceição, próximo ao n°4900: 1   Barro Vermelho : 2  
-##  Estrada do Boqueirão                   : 1   Gradim         : 2  
-##  Estrada do Coelho                      : 1   Mutuá          : 2  
-##  nº 40 da Travessa Menezes              : 1   Mutuaguaçú     : 2  
-##  (Other)                                :32   (Other)        :18  
-##           Mun            CEP        Latitude           Longitude        
-##  Guapimirim : 0            : 9   Min.   :-22887883   Min.   :-43111375  
-##  Itaboraí   : 0   24715-170: 2   1st Qu.:-22827330   1st Qu.:-43066246  
-##  Magé       : 3   23140-316: 1   Median :-22811224   Median :-43028344  
-##  Niterói    : 2   24110-813: 1   Mean   :-22806122   Mean   :-43026702  
-##  São Gonçalo:33   24415-560: 1   3rd Qu.:-22806880   3rd Qu.:-42995166  
-##  Tanguá     : 0   24420-380: 1   Max.   :-22624808   Max.   :-42956006  
-##                   (Other)  :23                                          
-##          Veiculo.assaltante N.Assaltantes  
-##  Carro            :18       Min.   :1.000  
-##  Motocicleta      : 7       1st Qu.:1.000  
-##  Carro/Motocicleta: 4       Median :2.000  
-##  A pé             : 3       Mean   :1.921  
-##                   : 2       3rd Qu.:2.000  
-##  carro            : 2       Max.   :5.000  
-##  (Other)          : 2                      
-##                                                           Fisico  
-##                                                              : 8  
-##  1,80m de altura, negro, nem gordo nem magro                 : 1  
-##  Alto e claro                                                : 1  
-##  Alto, branco, usando boné e barbudo                         : 1  
-##  Alto,magro de pele escura                                   : 1  
-##  Ambos era morenos, altura de um deles era por volta de 1,75m: 1  
-##  (Other)                                                     :25  
-##                      Cabelo       Nasc.vitima Sexo.vitima
-##                         :28             :20      : 1     
-##  Curto                  : 3   08/04/1963: 4   F  : 1     
-##  curto                  : 2   07/07/1978: 2   F/M: 0     
-##  Ambos de cabelos curtos: 1   14/10/1991: 2   M  :34     
-##  Careca                 : 1   05/12/1976: 1   M/F: 1     
-##  Curto/cgrande          : 1   07/01/1990: 1   M/M: 1     
-##  (Other)                : 2   (Other)   : 8              
-##                    Naturalidade                         G_Instrução.vitima
-##                          :21                                     :22      
-##  São Gonçalo             :11    2º Grau Completo                 :12      
-##  Rio de Janeiro          : 2    3º Grau Incompleto               : 2      
-##  Campos dos Goytacazes/RJ: 1    1º Grau Completo                 : 1      
-##  Duque de Caxias/RJ      : 1    2º Grau Completo/2º Grau Completo: 1      
-##  Niterói                 : 1    1º Grau Incompleto               : 0      
-##  (Other)                 : 1    (Other)                          : 0      
-##  Veiculo.vitima     Sedex            PAC       
-##         :15     Min.   : 0.00   Min.   : 0.00  
-##  Kombi  :15     1st Qu.: 5.25   1st Qu.: 4.00  
-##  Doblo  : 3     Median :10.50   Median :10.50  
-##  Ducato : 3     Mean   :12.76   Mean   :11.45  
-##  Carro  : 1     3rd Qu.:16.00   3rd Qu.:14.75  
-##  Doblô  : 1     Max.   :39.00   Max.   :63.00  
-##  (Other): 0</code></pre>
+<pre><code>##            RO                       SIAPRO         DT.Assalto 
+##             :  3                       : 15             : 18  
+##  8991/2015  :  2   08458.003835/2015-40:  2   11/09/2015:  4  
+##  934/2015   :  2   0845.016301/2015-17 :  1   28/08/2015:  4  
+##  10.049/2016:  1   08455.042990/2015-10:  1   29/07/2015:  4  
+##  10.057/2016:  1   08458.000111/2016-25:  1   06/05/2015:  3  
+##  10.071/2016:  1   08458.000629/2016-69:  1   16/07/2015:  3  
+##  (Other)    :219   (Other)             :208   (Other)   :193  
+##       ano         dia.semana         mês           H.Assalto  
+##  Min.   :2013   Min.   :1.000   Min.   : 1.000          : 24  
+##  1st Qu.:2015   1st Qu.:2.000   1st Qu.: 4.000   14:00  : 10  
+##  Median :2015   Median :3.000   Median : 7.000   14:30  :  9  
+##  Mean   :2015   Mean   :3.265   Mean   : 6.588   11:00  :  8  
+##  3rd Qu.:2015   3rd Qu.:4.000   3rd Qu.: 9.000   12:00  :  8  
+##  Max.   :2016   Max.   :7.000   Max.   :12.000   13:00  :  8  
+##                 NA's   :18      NA's   :18       (Other):162  
+##                                   Logradouro              Bairro   
+##                                        :  2   Jardim Catarina: 27  
+##  Rua José Mana Junior                  :  2   Alcântara      : 11  
+##  Rua Maria Menezes,próximo ao n° 10    :  2   Barro Vermelho : 10  
+##  Anselmo de Andrade                    :  1   Mutuá          :  9  
+##  Av Vereador Pereira Neto, na Quadra 37:  1   Trindade       :  9  
+##  Av. Almirante Tamandaré 2781          :  1   Coelho         :  7  
+##  (Other)                               :220   (Other)        :156  
+##           Mun             CEP         Latitude           Longitude        
+##  Guapimirim :  3            : 81   Min.   :-22955639   Min.   :-43684529  
+##  Itaboraí   : 10   25900-000:  4   1st Qu.:-22835652   1st Qu.:-43063604  
+##  Magé       :  8   25940-000:  3   Median :-22821493   Median :-43021657  
+##  Niterói    : 26   24130-340:  2   Mean   :-22817287   Mean   :-43027342  
+##  São Gonçalo:181   24436-760:  2   3rd Qu.:-22806646   3rd Qu.:-42994694  
+##  Tanguá     :  1   24715-050:  2   Max.   :-22522703   Max.   :-42726584  
+##                    (Other)  :135                                          
+##    Veiculo.assaltante N.Assaltantes   
+##  Carro      :118      Min.   : 1.000  
+##             : 31      1st Qu.: 1.000  
+##  Motocicleta: 28      Median : 2.000  
+##  A pé       : 21      Mean   : 2.058  
+##  A Pé       : 10      3rd Qu.: 2.000  
+##  carro      : 10      Max.   :10.000  
+##  (Other)    : 11      NA's   :3       
+##                                                                            Fisico   
+##                                                                               : 35  
+##  1,75 m,85 kg,forte ,moreno,usava óculos tipo Ray Ban, lentes espelhadas ,boné:  1  
+##  1,80m de altura, negro, nem gordo nem magro                                  :  1  
+##  Abordou: era negro, &quot;gordinho&quot; e preto; Comparsa: era moreno                 :  1  
+##  Afrodescendete,1,80 m e magro                                                :  1  
+##  Alto e claro                                                                 :  1  
+##  (Other)                                                                      :189  
+##                      Cabelo        Nasc.vitima  Sexo.vitima
+##                         :207             :138      :  7    
+##  Curto                  :  9   08/04/1963:  6   F  : 12    
+##  Curto/Curto            :  3   16/10/1973:  4   F/M:  1    
+##  Ambos de cabelos curtos:  2   07/07/1978:  3   M  :199    
+##  curto                  :  2   20/03/1990:  3   M/F:  1    
+##  Careca                 :  1   14/10/1991:  2   M/M:  9    
+##  (Other)                :  5   (Other)   : 73              
+##                    Naturalidade          G_Instrução.vitima Veiculo.vitima
+##                          :145                     :166             :163   
+##  São Gonçalo             : 31   2º Grau Completo  : 47      Kombi  : 35   
+##  Rio de Janeiro          : 16   1º Grau Completo  :  4      Ducato :  6   
+##  Niterói                 :  9   3º Grau Completo  :  4      Doblo  :  5   
+##  Campos dos Goytacazes/RJ:  4   3º Grau Incompleto:  2      Doblô  :  5   
+##  Magé/RJ                 :  3   1º Grau Incompleto:  1      Carro  :  4   
+##  (Other)                 : 21   (Other)           :  5      (Other): 11   
+##      Sedex            PAC       
+##  Min.   : 0.00   Min.   : 0.00  
+##  1st Qu.: 6.00   1st Qu.: 4.00  
+##  Median :11.00   Median :10.00  
+##  Mean   :13.69   Mean   :11.36  
+##  3rd Qu.:20.00   3rd Qu.:14.50  
+##  Max.   :39.00   Max.   :63.00  
+##  NA's   :184     NA's   :190</code></pre>
 <p>Como os registros estao distribuidos por ano:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Separando por ano</span>
 dAnos &lt;-<span class="st"> </span>dados <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(ano) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(ano<span class="op">!=</span><span class="dv">2013</span>)
 ano &lt;-<span class="st"> </span>dAnos <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">pull</span>(ano) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">as.factor</span>()
-freq &lt;-<span class="st"> </span>dAnos <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(n) <span class="co">#pull seleciona coluna e retorna como vetor</span>
+freq_ano &lt;-<span class="st"> </span>dAnos <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(n) <span class="co">#pull seleciona coluna e retorna como vetor</span>
 
-<span class="kw">data.frame</span>(ano, freq, <span class="dt">perc=</span><span class="kw">round</span>(<span class="dv">100</span><span class="op">*</span>freq<span class="op">/</span><span class="kw">sum</span>(freq),<span class="dv">1</span>))
-p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span><span class="kw">data.frame</span>(ano,freq),<span class="kw">aes</span>(<span class="dt">x=</span>ano, <span class="dt">y=</span>freq, <span class="dt">fill=</span><span class="kw">as.factor</span>(freq)))<span class="op">+</span>
+<span class="kw">data.frame</span>(ano, freq_ano, <span class="dt">perc=</span><span class="kw">round</span>(<span class="dv">100</span><span class="op">*</span>freq<span class="op">/</span><span class="kw">sum</span>(freq_ano),<span class="dv">1</span>))
+p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span><span class="kw">data.frame</span>(ano,freq_ano),<span class="kw">aes</span>(<span class="dt">x=</span>ano, <span class="dt">y=</span>freq_ano, <span class="dt">fill=</span><span class="kw">as.factor</span>(freq_ano)))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">width=</span><span class="fl">0.5</span>,<span class="dt">position=</span><span class="st">&quot;dodge&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;ano&quot;</span>, <span class="dt">y=</span> <span class="st">&quot;frequencia&quot;</span>, <span class="dt">title=</span><span class="st">&quot;Número de Assaltos aos Correios&quot;</span>) 
-p</code></pre></div>
+p1</code></pre></div>
 <p>Cabe ressaltar que os registros de 2014 e 2016 sao parciais.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Separando por dia da semana</span>
-dadosseg=dados[dados<span class="op">$</span>dia.semana<span class="op">==</span><span class="dv">1</span>,]
-dadoster=dados[dados<span class="op">$</span>dia.semana<span class="op">==</span><span class="dv">2</span>,]
-dadosqua=dados[dados<span class="op">$</span>dia.semana<span class="op">==</span><span class="dv">3</span>,]
-dadosqui=dados[dados<span class="op">$</span>dia.semana<span class="op">==</span><span class="dv">4</span>,]
-dadossex=dados[dados<span class="op">$</span>dia.semana<span class="op">==</span><span class="dv">5</span>,]
-dadossab=dados[dados<span class="op">$</span>dia.semana<span class="op">==</span><span class="dv">6</span>,]
-dadosdom=dados[dados<span class="op">$</span>dia.semana<span class="op">==</span><span class="dv">7</span>,]
+dados_sem &lt;-<span class="st"> </span><span class="kw">na.omit</span>(dados <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(dia.semana))
 
-dia=<span class="kw">c</span>(<span class="st">&quot;1.seg&quot;</span>,<span class="st">&quot;2.ter&quot;</span>, <span class="st">&quot;3.qua&quot;</span>, <span class="st">&quot;4.qui&quot;</span>, <span class="st">&quot;5.sex&quot;</span>, <span class="st">&quot;6.sab&quot;</span>,<span class="st">&quot;7.dom&quot;</span>)
-freq1=<span class="kw">c</span>(<span class="kw">length</span>(dadosseg<span class="op">$</span>dia.semana),<span class="kw">length</span>(dadoster<span class="op">$</span>dia.semana),<span class="kw">length</span>(dadosqua<span class="op">$</span>dia.semana),<span class="kw">length</span>(dadosqui<span class="op">$</span>dia.semana),<span class="kw">length</span>(dadossex<span class="op">$</span>dia.semana),<span class="kw">length</span>(dadossab<span class="op">$</span>dia.semana),<span class="kw">length</span>(dadosdom<span class="op">$</span>dia.semana))
-<span class="kw">data.frame</span>(dia,freq1,<span class="dt">perc=</span><span class="kw">round</span>(<span class="dv">100</span><span class="op">*</span>freq1<span class="op">/</span><span class="kw">sum</span>(freq1),<span class="dv">1</span>))</code></pre></div>
-<pre><code>##     dia freq1 perc
-## 1 1.seg     6 15.8
-## 2 2.ter     6 15.8
-## 3 3.qua    13 34.2
-## 4 4.qui     6 15.8
-## 5 5.sex     3  7.9
-## 6 6.sab     4 10.5
-## 7 7.dom     0  0.0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1=<span class="kw">ggplot</span>(<span class="dt">data=</span><span class="kw">data.frame</span>(dia,freq1),<span class="kw">aes</span>(<span class="dt">x=</span>dia, <span class="dt">y=</span>freq1, <span class="dt">fill=</span><span class="kw">as.factor</span>(freq1)))<span class="op">+</span>
+dia &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;1.seg&quot;</span>,<span class="st">&quot;2.ter&quot;</span>, <span class="st">&quot;3.qua&quot;</span>, <span class="st">&quot;4.qui&quot;</span>, <span class="st">&quot;5.sex&quot;</span>, <span class="st">&quot;6.sab&quot;</span>,<span class="st">&quot;7.dom&quot;</span>)
+freq_dias=<span class="kw">c</span>(dados_sem <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(n))
+<span class="kw">data.frame</span>(dia,freq_dias,<span class="dt">perc=</span><span class="kw">round</span>(<span class="dv">100</span><span class="op">*</span>freq_dias<span class="op">/</span><span class="kw">sum</span>(freq_dias),<span class="dv">1</span>))</code></pre></div>
+<pre><code>##     dia freq_dias perc
+## 1 1.seg        31 14.7
+## 2 2.ter        40 19.0
+## 3 3.qua        48 22.7
+## 4 4.qui        44 20.9
+## 5 5.sex        31 14.7
+## 6 6.sab        16  7.6
+## 7 7.dom         1  0.5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span><span class="kw">data.frame</span>(dia,freq_dias),<span class="kw">aes</span>(<span class="dt">x=</span>dia, <span class="dt">y=</span>freq_dias, <span class="dt">fill=</span><span class="kw">as.factor</span>(freq_dias)))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">width=</span><span class="fl">0.5</span>,<span class="dt">position=</span><span class="st">&quot;dodge&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;dia da semana&quot;</span>, <span class="dt">y=</span> <span class="st">&quot;frequencia&quot;</span>, <span class="dt">title=</span><span class="st">&quot;Numero de Assaltos aos Correios&quot;</span>) 
-p1</code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+p2</code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAHgCAMAAABNUi8GAAABKVBMVEUAAAAAADoAAGYAOjoAOmYAOpAAZrYAujgAv8QzMzM6AAA6ADo6AGY6Ojo6OmY6OpA6ZmY6kJA6kNtNTU1NTW5NTY5Nbo5NbqtNjo5NjqtNjshhnP9mAABmADpmAGZmOgBmOpBmkJBmtv9uTU1uTW5uTY5ubo5ubqtuq6tuq+SOTU2OTW6OTY6Obk2Obm6ObquOjo6OyP+QOgCQOjqQZgCQkDqQkGaQtpCQ27aQ29uQ2/+rbk2rbm6rbo6rjk2rq46ryKur5OSr5P+2ZgC225C22/+2/9u2//+3nwDIjk3Ijm7I/8jI///bkDrb/7bb/9vb///kq27k/+Tk///r6+vy8vL1ZOP4dm3/tmb/yI7/25D/27b/29v/5Kv//7b//8j//9v//+T///9LBbNfAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAZwUlEQVR4nO2djX/jyFmAnYULXO74ivcILKEF712X7G2BBNprN1faJtBtIOltCKWJab70//8RaF5Jo5E99ij2O/Gb+Hl+v11bk3n1akaPZyTZsgcFgGEGq94AgHkgKJgGQcE0CAqmQVAwDYKCaRAUTIOgYJpFBD0bbMvjze72csnvDjZjxZeDUTryk4/F+PMPy+UvjgclyWRNPlgBiwm68d49ZhL07mAQ9bZbpxTm7MVygo63BkIyG4KujsUEHcjuyiToeOtPqhfA3MjlBb3ZFTXLh9Eyq4GsLCToix/JJO8ErYYWZ9p4a/tyUJZfen0HA2dQ+TcZcpvlmrLai18dbAYV29X/+5aYXw6l1QTsn7gol8Ol/e6geurD21pFWHVmjeZIZbzltre7uT+d2OiqmbNSQT4WE/RXB26MmxT0z8spc+ObrWrSFD/cPr47+IOtUlm/XK/DLf3h98OKNTe7m3cHlRSD6hDRP6miqqJG0CBPU6tNIIszalRJGiY297uJjZZmzkoFGVlM0A8y6kwKOhgVMoa6P5b7cOQGp023N2XIc8tng/pQ7ma32s+bRVux5lJWI2UyPm62TyqnqpXWU3y7Xl9LCKvGa/gnVfWmkt9cv9FNvlkrgpwsKKjMj5OCbrq9Vi66snE1S5dVW1VKjuuRsvqzK2wrViuX6rLzS+M368rBeYybZgNB2/V2agVVZ9XoCNZWakbvaqPbRrgmzU4FuVhU0Ltykp86Bm32+nEzOboJsaox3hq50Mta0OpKkgtrK1Yrr0+t3aJcBHLB/kn9x46gfr2+VriezZk1JgRtKjUNcv93GzEzFWRkUUHdPP6bHIIe18vVCDuozkrqJ25IHNWT/bSgbfWiGj1H9QFCvEZ7DHrmxsSmUi9BOyuCnCwsaDnJ/4W7zHTsFjpHiiJovTeLZl9Hp/jAnwY5RnAPzd4/Hoz8k6pu5xh0Yr2+elt1Vo3g/QZ3TN1O8a2g3UbMXBFkZHFB3ansdrWb5GynK+idnOe7UarZ42W98CSpCWsryh+ad5HOBqNLEagc3vyT+jBXTmWcoNWJVr1eX0viw6rxGsF10O3OSVIraLcRM1cEGVlcUDfNbdfToLte1BW0mR6bg4DJq0k+rK3o8KKWgtUXc8SMzhMvaOwyU/0KaKvOqtF9J6l7Qam70U0jZq4I8rGEoPUc6d5X+m7qGLTe/aP2XUK3HBy1lYv1hfqmYlXavDkls21tj3/ijiw33h/Xw7IMkO16fS3BVy1m1WgsHjXbE1ySDze6bcTMFUE2+DQTmAZBwTQICqZBUDANgoJpEBRMg6BgGgQF0yQEPR8Oh1+cFrdvhzsXTdn/9KJntUzhpO9T6ymQEPRk3/1/f7hfnL9qyjT7KFc46fvUegrMF/T+2yP3cPvutLj+6rQu1OyjXOGk71PrKTBf0HJqHw73i+s3F8Xt10dlwaclj7JdAMJ8Qa+/PHKj6NVOI6hD80WcK5z0fWo9BXqcxZ/styOoQ7OPcoWTvk+tp0AvQTkGfZbps4qlxXxB3dx+/7PT+8M9zuKfX/rscmmQvg768qjgOuizTJ9ZLR0WeCdJs49yhZO+T62nAIKub3p9mzKAoOubXt+mDCDo+qbXtykDCLq+6fVtygCCrm96fZsygKDrm17fpgwg6Pqm17cpAwi6vun1bcrAcxH0fxNkTq8cj6AeBFVJrxyPoB4EVUmvHI+gHgRVSa8cj6AeBFVJrxyPoB4EVUmvHI+gHgRVSa8cj6AeBFVJrxyPoB4EVUmvHI+gHgRVSa8cj6AeBFVJrxyPoB4EVUmvHI+gHgRVSa8cj6AeBFVJrxyPoB4EVUmvHI+gHgRVSa8cj6AeBFVJrxyPoB4EVUmvHI+gHgRVSa8cj6AeBFVJrxyPoB4EVUmvHI+gHgRVSa8cj6AeBFVJrxyPoJ7n8ktzKUFXvX2wIIygKumV4xlBPQiqkl45HkE9CKqSXjkeQT0IqpJeOR5BPQiqkl45HkE9CKqSXjkeQT0IqpJeOR5BPQgq/E2C3JuvG46gan2kFo6gD4/XtykDCCogqFUQVEBQqyCogKBWQVABQa2CoAKCWgVBBQS1CoIKCGoVBBUQ1CoIKiCoVRBUQFCrIKiAoFZBUAFBrYKgAoJaBUEFBLUKggoIahUEFRDUKggqIKhVEFRAUKsgqICgVkFQAUGtgqACgloFQQUEtQqCCghqFQQVENQqCCogqFUQVEBQqyQFvT/cL4rbt8Odi6ZEs4/UwhH04fF5zVIiKej5cF8kPX/VlGj2kVo4gj48Pq9ZSqQEvf7BD/eL23enxfVXp3WRZh+phSPow+Nzu6VCQtD7b39Zjp7Xby6K26+PyuVPS7Jsxx8nSMWnBE2EpwRVaiU8mISg53tuer/aaQR1aL6IPSlBU/GMoA+Pz+2WCvMFLYfO+84I6tDsIw+CKoavj6DnQ8feIxyDIqhi+PoIWlSXme4P93KfxSOoYvjaCfoI10ERVDF8rQSdRrOPPAiqGI6gan3kQVDFcARV6yMPgiqGI6haH3kQVDEcQdX6yIOgiuEIqtZHHgRVDEdQtT7yIKhiOIKq9ZEHQRXDEVStjzwIqhiOoGp95EFQxXAEVesjD4IqhiOoWh95EFQxHEHV+siDoIrhCKrWRx4EVQxHULU+8iCoYjiCqvWRB0EVwxFUrY88CKoYjqBqfeRBUMVwBFXrIw+CKoYjqFofeRBUMRxB1frIg6CK4Qiq1kceBFUMR1C1PvIgqGI4gqr1kQdBFcMRVK2PPAiqGI6gan3kQVDFcARV6yMPgiqGI6haH3kQVDEcQdX6yIOgiuEIqtZHHgRVDEdQtT7yIKhiOIKq9ZEHQRXD11zQLKQETcWnBE2EpwRVaiU8GEZQgRHUKggqIKhVEFRAUKsgqICgVkFQAUGtgqACgloFQQUEtQqCCghqFQQVEDTB2WDj/WTZ//3HZMndwShac4rLFx/Gn01Vu/nb6UgEFRB0Pje7o6myiGFnm9Ga05SCRos/+ThZhKACgs4nImOkzI2AsZrTzBDUjcATIKiAoAHjrcFgsF0/jpqSTV9+d9AsbdfPi/HnPxq8+HD2yUepWS25PzkPb3YHG98E2rrlH1dT/FSm6SEUQQUEbZFJ+qw+SBxvVYaWz5vyu4NqIndl7rn7N97adOJuVzXrpfK/UtmbXVe9PS692d0u/8nqpzNNj78IKiBoy+8/VkaOP2+nYSeOL68lco8yVbszHmeX+FYJOqpn8bKoqtIKKsuVldOZpo9gEVRA0JDLcsItjTqW2dvL2JQ3x48iqJuSG2lbQd3S2UDYPqurNCuvlj+vhs3JTDIII+g0CNoi83FlVHm4WNlYTfFVeV9B68PJOYJOZ0LQGSBoi0jXzMn1nOtlLMs7U7yr1lzU7ArarCE6xVch05mY4meAoIGgbljbqqfy2sZGRlfenBg5mfxJklQ73g4EvTso9busqndPkjabk6TpTJwkzQBBA8ojwo2flPbVB4hu2hVxmvL60lK5vOkvM1XHqKWSXlD508b76vHv45eZJjK1xwUIOgGCahB7q7Ki3+V7LtTPBEFVONuc8YeegvJW5ywQVIXICFgx/uybreqy07xPkvBhkZkgqFUQVEBQqyCogKBWQVABQQN+F+O3y1i2BAgqIGgAgkZAUMVwBFXrIw+CKoYjqFofeRBUMRxBI/xRgkRnPXFBl2z9JAjqQVABQQMQNAKChtgVNLwP5FFAUAFBA+YIejmI3y+cDwQVEDRgtqDHG98YG0GvhsMvTovi9u1w56Ipi7cWQddAUHNT/PVXp8X5q+L+cN891MRbi6AImoP0FF9KevvuVFytiLcWQRE0B2lBy6Hz+s1Fcfv1UbnwaUm8WmoXJbKkBE1tZUrQRHhK0FT6JVtviycl6PXrl0fF1U4jqCP+cmQEZQTNQXoELc1sR1BHvLUIiqA56HGZ6WSfY9BU+rUR9NGZL2g9t98f7nEWPxcEzUViBD0fDstjUK6DptIjaC54J0lA0AAEjYCgIQjqQVABQQN+G2UZy5YAQQUEtQqCCgga8OsYjKAI2oKgHgQVEDTArqDj6hvIEh+ajrcWQRE0B6Ggdwfbdwej5G/ZxVuLoAiag1BQp+bxduxbRDvEW4ugCJqDSUHPNmf9jqIn3loERdAcdI5Bj8XO6S+y7xJvLYKuhaDycbu7gz4/ua1DR1D3ew7Hydzx1iLoOgha3XZ8PEoeB6rBZSYBQQNmC1rddnzzvUf80DKCCggakJrix3/2ryuY4sszpJvdAddBETQt6NaolJQpHkEXJvcI+nHOb3Ypg6ACggakBL35u1UJ6s7i3W9/zifeWgRdG0HdWfxqpvhj52bS0HhrEXR9BPU/I/8ITL6TVBS8k4SgswV9dBBUQNAAs4IWZy9k/N6eHxJvLYIiaA66Z/Huh+UHCT8RVL/1kyCoh8tMAoIGIGgEBA3htmMPt3wICGqV7i0fqWv0Qry1CPpsBI22wMIImrwbqSLeWgRF0Bx0R9BRn5B4axEUQXPQOQZNXaKviLcWQRE0B90pns+DIqhhQZcitYsS4SlBU+lTgibCU4Jmbr0tnrqg8ZfjkmMII2gII6inK+jZYDBK3XWMoPqtn8SqoJfN8d/j/dhH9/Ogn/xmd8TnQRF0hqBOyzNnxyP+6PHEdVB3KZSP2yFoXFCHk/Qxf/QYQQUEDZgrqIygq5riz9wUz+dBEXSmoOOt6ob4FQnK50ERtEiMoNXtnKsStBfx1iLoegjqbulEUARdjkyCum8MW+UIyludCOqYKai7Tr7aY1BH8jsj4q1F0DUQdAVEpni+AhxBbQvKFI+glgU9ZgRFUJOC1idJfAU4gtoUtCfx1iLosxHU7m3H/Yi3FkGfjaCmiF0HTVwKjbcWQZ+NoNEdYGIEvXSHn3xYBEGNCsrXLyKoA0EjIGgIgnr4flABQQPsCuo+DDAYjBIh8dYiKILmgMtMAoIGIGgEBA2xK6h8f9fN7uCxfkuW++IrEDRgnqBng5FIetbrmzoV4L54AUED5gg6/tPvj+TXjh/tE8vcdiwgaMBsQe/+5acHo9X9VieCIqhjtqBn2256b29NegS4L15A0ICZgpZD590qR1Dui0dQx0xB5TL5YHtlx6A9ibcWQZ+/oEV1mcn9KPZKzuL5jnoEdaQEXdl1UH7lA0Ed8wR9dCZOkvq8LuKtRVAEzUHim0WuXw+H+0Vx+3a4c9GUxVuLoAiag/knSbdfHxXXXx7dH+4X56+awnhrERRBc+AFra/Sd7lyVp7s3747La6/Oq0L461FUATNwXxBHeUoev3mQgbTovi0JL6i1C5KbEdK0FQ7UoImwlOCptIv2XpbGL3t+Cx+S+f94V5xtdMI6oi/HBlBn80IaorUZabbt3vlqdIbBJ3PsxI02gOrH0GjXL8uz+ELjkFT6RE0F/MFrfyUaZ6z+HkgaC7mC3o+dOxzHTSVHkFzwYdFBAQNQNAICBqCoB4EFRA0AEEjIGiIXUHrj2T2/GSmAggqIGjAPEHdbcftwyOAoAKCBswRVG479g+PAYIKCBowW9DqtuPm4VFAUAFBA2YLWt123Dw8CggqIGjATEHb244RFEGXIZOg9W3H9cMS1j0ABBUQNGCmoAWXmRBUQFAPggoIGjBP0EcHQQUEDUDQCAgagqAeBBUQNABBIyBoCIJ6EFRA0ACjtx33Jt5aBH02gpoCQQUEDYh2ICMogrYgqAdBBQQNQNAICBqCoB4EFRA0AEEjIGgIgnoQVFixoL9OkEo/CYJOg6BrIah8zm68NUj8GqEeCCogaMA8Qd39xu5X5vr93oYCCCogaMAcQeV+Y/kpxO/xS3MIak7Q6n5jRlAENSpofb/xqn5prifx1iLo8xe0ue34s/fJ32xXYwFB46R2USI8JWgqfUrQRHhK0MytTwmaSq/LTEHr+41X93vx/Yi/HBlBn/8IWlSXmayPoPHWIujaCFpcDgYbjzSAImgFggbME/TRQVABQQMQNAKCImgUBBUQNABBIyAogkZBUAFBA7jtOAKC2hHUFAgqIKhVEFRAUKsgqICgVkFQAUGtgqACgloFQQUEtQqCCghqFQQVENQqCCogqFUQVEBQqyCogKBWQVABQa2CoAKCWgVBBQS1CoIKCGoVBBUQ1CoIKiCoVRBUQFCrIKiAoFZBUAFBrYKgAoJaBUEFBLUKggoIahUEFRDUKggqIKhVEFRAUKskBb3+6rQobt8Ody6aknhrERRBc5AS9Gr4xWlxf7hfnL9qiuKtRVAEzUFC0JOXvyhH0Nt3p9VIKsRbi6AImoNeU/z1m4vi9uujcunTkni91C5KpEkJmtrMlKCJ8JSgqfRLtj4laCr9M6aXoFc7jaCO+MuREZQRNAcPHEEd8dYiKILmoJegHIOm0iNoLnoJen+4x1n8XBA0F1wHFRDUKryTJCCoVRBUQFCrIKiAoFZBUAFBrYKgAoJaBUEFBLUKggoIahUEFRDUKggqIKhVEFRAUKsgqICgVkFQAUGtgqACgloFQQUEtQqCCghqFQQVENQqCCogqFUQVEBQqyCogKBWQVABQa2CoAKCWgVBBQS1CoIKCGoVBBUQ1CoIKiCoVRBUQFCrIKiAoFZBUAFBrYKgAoJaBUEFBLUKggoIahUEFRDUKgsIGie1ixLhKUFT6VOCJsJTgmZufUrQVPpnDCOowAhqFQQVENQqCCogqFUQVEBQqyCogKBWQVABQa2CoAKCWgVBBQS1CoIKCGoVBBUQ1CoIKiCoVRBUQFCrIKiAoFZBUAFBrYKgAoJaBUEFBLUKggoIahUEFRDUKggqIKhVEFRAUKsgqICgVkFQAUGtgqACgloFQQUEtQqCCghqFQQVENQqCCogqFUQVEBQqyCogKBWQVABQa2CoMITF/R3CeJR+jZlAEEFBLUKggoIahUEFRDUKggqIKhV+gl6+3a4c9EsZNlFCIqgUXoJen+4X5y/apay7CIERdAovQS9fXdaXH91Wi9l2UUIiqBRegl6/eaiuP36qHz2aUneDQII6SXo1U4jqCP1cq5fnv2qZQonfZ9aT4EHjqAOzT7KFU76PrWeAmrHoIv1Ua5w0vep9RToeRa/lzyLX6yPcoWTvk+tp4DaddDF+ihXOOn71HoKqL2TtFgf5QonfZ9aTwEEXd/0+jZlAEHXN72+TRlA0PVNr29TBhB0fdPr25QBBF3f9Po2ZQBB1ze9vk0ZQND1Ta9vUwYQdH3T69uUAQRd3/T6NmUAQdc3vb5NGUDQ9U2vb1MGFhC0H0t+8H7Zz+2T/pmAoKQ3DYKS3jQISnrTZBMUQAMEBdMgKJgGQcE0CAqm0RS0vXV+0RW8Hg73F1zT1XD4xZLp3XekTW9Tz005Hy6zAfeHw5dHkfKTyBZFU9cdV8xoxdNFUdCrZQ1xX15y/eVRsYigLqK9dX8xzodL7NpeKs2Lvmpv7F5grW00gs7g5OUvaq3qwez2bfPwl/941GcNV04wt0sksgq//sEPe2tfa10G/vW3R25B/r0e9vSuTFVV7Kyg52vl/tsj34yw+Sd7fV437qtbutH1Zp/8c7+tb76YyHV22Yoq9/23Px8O98oV7vVpgVEyTPGut91OqfdN+XAVnb6iVD3t1lSFX7/uPx5UJsjXoLxs/JJRuZdj99/+shp7uivoKWipRK1St/m37/7rXXoF12/+rZ7i6+hms092LnptQPMicJ1dboZ72Lm4P3T992r5Q69VkkPQ6tXsHsrudj0eDC8JnBzVmurw/p17/brdxWVwM4IWnfFpDud79eTYXUHPDXCHJlUzu80vjxt6jF/uZei+oa0IvqNNot180mOa9wOo6+zD/boFbnvcv2CdT48cJ0nl9FS6ImNKORCV/d5b0Nu3e82amvAHvPrr0bdK6AU96XfyUobVgnZX8JANqFTqNL8+qE4nbzSqopvN/s+jXoI2R6BVg/fdQ9kCBJ0g2Jdlj9Xj1kNGUD+fO0Gr8AdNT7IruwPg7dv9fuuoToX3plbwcEGLsPnlUWSPU7fbfwq/39JF15tdrrHPSc9JPUozgs6l3pfu5ez+VQdCDzgGbY8362PQq55HYEXnO3ZP5BDSLZx/IX71GsSK9vx3agU989//7LSYbP71m//u8+o8aab4OrrZ7JNeR5DtANA9BkXQLs2seuJPY52Y1Tlxn/j6el65ivtDOYt/2fcEpwquq5eBf+XkGg7/QY4B5by2D07QqRU84DponT9svltl9PrRBPUliza63uzyLL7Hi7s9s7w/7JzFI2g/Hv00culd8qT36bMiu6Dla7rPIKALgj4beC8eTIOgYBoEBdMgKJgGQcE0CAqmWSdBL198GH/2Pla8go2BfqyZoA8oBhMgKIKaZl0EvdkdbPy4muLHW4PBYLtT3CmT56OiuDsYDNyfPvumLNh2paOiqVgVtsuQizUR9GZ3u/wngt7sjorirBo1m+KwTA5Tx1uju4PNsuyTj+OtTz4WZwP3X1uxKuwGQg7WRFCZxs9E0N9/LGoL2+KwbPz5hzakFLB0VYSVCk3FyeVVtGk9WBNBy5FQ1BOXLstZeeN9WByWFceDwab720DYrkZU/19VcXJ5lW173qyfoDe7pU/1oNcUh2WFHJm++CB/K0I3g+DJ5VW16/mzJoLKfF1dB7104l1uvA+LwzKhnNqbxY6gTcXJ5dW0ah1YE0FvdjebkySn03ircqopDstE2rLe3UEp32U4mwfBk8urbd1zZk0EDS8zlceYGz9xZ99tcaesOap0l5maCdz/V1ecXF5Zu5496yIoPFEQFEyDoGAaBAXTICiYBkHBNAgKpvl/M6c6pD36aHMAAAAASUVORK5CYII=" /><!-- --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Eliminando os dados faltantes do banco de dados, criando o banco dados1</span>
 ind=<span class="kw">is.na</span>(dados<span class="op">$</span>dia.semana)
 dados1=dados[ind<span class="op">==</span><span class="ot">FALSE</span>,]
 
-<span class="co">#criando correspondencia entre dia da semana e o nome:</span>
+<span class="co">#criando correspondencia entre dia da semana e o nome dos dias:</span>
 sem=<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>
 nome.sem=<span class="kw">c</span>(<span class="st">&quot;1-segunda&quot;</span>, <span class="st">&quot;2-terca&quot;</span>, <span class="st">&quot;3-quarta&quot;</span>, <span class="st">&quot;4-quinta&quot;</span>, <span class="st">&quot;5-sexta&quot;</span>, <span class="st">&quot;6-sabado&quot;</span>, <span class="st">&quot;7-domingo&quot;</span>)
 <span class="kw">names</span>(sem)=nome.sem
@@ -225,13 +219,13 @@ p2=<span class="kw">ggplot</span>(<span class="dt">data=</span>dados1,<span clas
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;count&quot;</span>, <span class="dt">width=</span><span class="fl">0.5</span>,<span class="dt">position=</span><span class="st">&quot;dodge&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;dia da semana&quot;</span>, <span class="dt">y=</span> <span class="st">&quot;frequencia&quot;</span>, <span class="dt">title=</span><span class="st">&quot;Numero de Assaltos aos Correios&quot;</span>) 
 p2</code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <p>Agora vamos utilizar o pacote data.table que foi concebido para facilitar a tabulacao dos dados. Neste pacote podemos acessar rapidamente um subconjunto de dados, agrupa-los, atualiza-los, produzir tabelas. Para instalar o pacote use: install.packages(“data.table”)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dt=<span class="kw">data.table</span>(dados)
 
 <span class="co">#Numero de linhas</span>
 dt[,.N]</code></pre></div>
-<pre><code>## [1] 38</code></pre>
+<pre><code>## [1] 229</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Variaveis do banco de dados</span>
 <span class="kw">names</span>(dt)</code></pre></div>
 <pre><code>##  [1] &quot;RO&quot;                 &quot;SIAPRO&quot;             &quot;DT.Assalto&quot;        
@@ -245,220 +239,361 @@ dt[,.N]</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Quantos niveis distintos em cada variavel:</span>
 <span class="kw">sapply</span>(dt,<span class="cf">function</span>(x) <span class="kw">length</span>(<span class="kw">unique</span>(x)))</code></pre></div>
 <pre><code>##                 RO             SIAPRO         DT.Assalto 
-##                 38                 38                 38 
+##                225                214                164 
 ##                ano         dia.semana                mês 
-##                  3                  6                 11 
+##                  4                  8                 13 
 ##          H.Assalto         Logradouro             Bairro 
-##                 28                 38                 23 
+##                 75                226                 91 
 ##                Mun                CEP           Latitude 
-##                  3                 29                 38 
+##                  6                137                226 
 ##          Longitude Veiculo.assaltante      N.Assaltantes 
-##                 38                  8                  4 
+##                227                  9                  8 
 ##             Fisico             Cabelo        Nasc.vitima 
-##                 31                  8                 14 
+##                195                 11                 76 
 ##        Sexo.vitima       Naturalidade G_Instrução.vitima 
-##                  5                  7                  5 
+##                  6                 25                 11 
 ##     Veiculo.vitima              Sedex                PAC 
-##                  6                 24                 22</code></pre>
+##                 12                 28                 23</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Quantos assaltos por município?</span>
 dt[,.N,by=Mun][<span class="kw">order</span>(<span class="op">-</span>N)]</code></pre></div>
-<pre><code>##            Mun  N
-## 1: São Gonçalo 33
-## 2:        Magé  3
-## 3:     Niterói  2</code></pre>
+<pre><code>##            Mun   N
+## 1: São Gonçalo 181
+## 2:     Niterói  26
+## 3:    Itaboraí  10
+## 4:        Magé   8
+## 5:  Guapimirim   3
+## 6:      Tanguá   1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Quantos assaltos por bairro?</span>
 dt[,.N,by=Bairro][<span class="kw">order</span>(<span class="op">-</span>N)]</code></pre></div>
-<pre><code>##                Bairro N
-##  1:   Jardim Catarina 8
-##  2:      Vista Alegre 4
-##  3:          Trindade 2
-##  4:        Mutuaguaçú 2
-##  5:    Barro Vermelho 2
-##  6:             Mutuá 2
-##  7:            Gradim 2
-##  8:           Paraíso 1
-##  9:          Caramujo 1
-## 10:    Porto da Pedra 1
-## 11:         Vila Rica 1
-## 12:           Piabetá 1
-## 13:            Coelho 1
-## 14:           Mutondo 1
-## 15:             Boaçu 1
-## 16:             Rocha 1
-## 17:      Lindo Parque 1
-## 18:           Camarão 1
-## 19:       Nova Cidade 1
-## 20:      Parque Iriri 1
-## 21:           Barreto 1
-## 22: Jardim Bom Retiro 1
-## 23:         Alcântara 1
-##                Bairro N</code></pre>
+<pre><code>##                      Bairro  N
+##  1:         Jardim Catarina 27
+##  2:               Alcântara 11
+##  3:          Barro Vermelho 10
+##  4:                Trindade  9
+##  5:                   Mutuá  9
+##  6:                Laranjal  7
+##  7:                   Rocha  7
+##  8:                  Coelho  7
+##  9:                 Fonseca  6
+## 10:              Amendoeira  6
+## 11:            Vista Alegre  5
+## 12:                  Gradim  5
+## 13:              Mutuaguaçú  4
+## 14:                 Barreto  4
+## 15:               Marambaia  4
+## 16:              Porto Novo  3
+## 17:               Boa Vista  3
+## 18:          Porto da Pedra  3
+## 19:            Lindo Parque  3
+## 20:                  Itaipú  3
+## 21:                  Centro  3
+## 22:          Santa Catarina  3
+## 23:                 Camarão  3
+## 24:             Santa Luzia  3
+## 25:                 Paraíso  2
+## 26:           Venda da Cruz  2
+## 27:               Vila Três  2
+## 28:               Parada 40  2
+## 29:                 Piabetá  2
+## 30:       Jardim Bom Retiro  2
+## 31:                   Boaçu  2
+## 32:             Nova Cidade  2
+## 33:              Raul veiga  2
+## 34:                  Itaúna  2
+## 35:                Apolo II  2
+## 36:                  Jockey  2
+## 37:                 Manilha  2
+## 38:                 Tribóbo  2
+## 39:                Caramujo  1
+## 40:             Maria Paula  1
+## 41:        Estrela do Norte  1
+## 42:                 Niterói  1
+## 43:             Porto Velho  1
+## 44:         Engenho Pequeno  1
+## 45:             Rio do Ouro  1
+## 46:               Vila Rica  1
+## 47:       Varzeas Das Moças  1
+## 48: Novo México/Nova Grécia  1
+## 49:          Barão do Iriri  1
+## 50:                 Mutondo  1
+## 51:         Porto da Madama  1
+## 52:                Miriambi  1
+## 53:               Mangueira  1
+## 54:           Jardim Idália  1
+## 55:           Santo Antônio  1
+## 56:         Aldeia da Prata  1
+## 57:              Rio Varzea  1
+## 58:             Monte Verde  1
+## 59:              Grande Rio  1
+## 60:              São Miguel  1
+## 61:             Galo Branco  1
+## 62:                    Mauá  1
+## 63:     Jardim Nova Marília  1
+## 64:          Novo Horizonte  1
+## 65:           Parada Modelo  1
+## 66:                  Icaraí  1
+## 67:                Monjolos  1
+## 68:              Guapimirim  1
+## 69:        Jardim Alcântara  1
+## 70:               Patronato  1
+## 71:              Santa Rosa  1
+## 72:               Pendotiba  1
+## 73:               Baldeador  1
+## 74:            Serra Grande  1
+## 75:                    Saco  1
+## 76:            Parque Iriri  1
+## 77:            Luiz Caçador  1
+## 78:                Lagoinha  1
+## 79:                Antonina  1
+## 80:                 Outeiro  1
+## 81:                    Ingá  1
+## 82:             Novo méxico  1
+## 83:                   Neves  1
+## 84:          Portão do Rosa  1
+## 85:         Engenho do Mato  1
+## 86:       Jardim Califórnia  1
+## 87:             Piratininga  1
+## 88:               Colubandê  1
+## 89:          Tenente jardim  1
+## 90:              Califórnia  1
+## 91:              Bom retiro  1
+##                      Bairro  N</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Os seis bairros com maior ocorrencia de assalto</span>
 <span class="kw">head</span>(dt[,.N,<span class="dt">by=</span>Bairro][<span class="kw">order</span>(<span class="op">-</span>N)])</code></pre></div>
-<pre><code>##             Bairro N
-## 1: Jardim Catarina 8
-## 2:    Vista Alegre 4
-## 3:        Trindade 2
-## 4:      Mutuaguaçú 2
-## 5:  Barro Vermelho 2
-## 6:           Mutuá 2</code></pre>
+<pre><code>##             Bairro  N
+## 1: Jardim Catarina 27
+## 2:       Alcântara 11
+## 3:  Barro Vermelho 10
+## 4:        Trindade  9
+## 5:           Mutuá  9
+## 6:        Laranjal  7</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Criar um codigo de area e listar as areas com maior ocorrencia (ex. CEP)</span>
 dt[,.N,by=CEP][<span class="kw">order</span>(<span class="op">-</span>N)]</code></pre></div>
-<pre><code>##           CEP N
-##  1:           9
-##  2: 24715-170 2
-##  3: 24715-421 1
-##  4: 24431-740 1
-##  5: 23140-316 1
-##  6: 24457-170 1
-##  7: 24715-220 1
-##  8: 24436-640 1
-##  9: 24461-260 1
-## 10: 25900-000 1
-## 11: 25931-802 1
-## 12: 24461-230 1
-## 13: 24715-445 1
-## 14: 24422-770 1
-## 15: 24420-380 1
-## 16: 24435-690 1
-## 17: 24457-550 1
-## 18: 24415-560 1
-## 19: 24430-280 1
-## 20: 24450-220 1
-## 21: 24724-130 1
-## 22: 24431-050 1
-## 23: 24715-441 1
-## 24: 24461-050 1
-## 25: 24110-813 1
-## 26: 24723-540 1
-## 27: 24710-610 1
-## 28: 24724-565 1
-## 29: 24715-420 1
-##           CEP N</code></pre>
+<pre><code>##            CEP  N
+##   1:           81
+##   2: 25900-000  4
+##   3: 25940-000  3
+##   4: 24715-170  2
+##   5: 24724-565  2
+##  ---             
+## 133: 24740-410  1
+## 134: 24710-250  1
+## 135: 24754-190  1
+## 136: 24750-500  1
+## 137: 24460-190  1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Simulando as ocorrencias de um universo de 1000 assaltos por amostragem sobre os dados</span>
 dt[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>.N,<span class="dv">1000</span>, <span class="dt">replace=</span>T), .(<span class="dt">mean=</span><span class="kw">mean</span>(.N)), by=Bairro][<span class="kw">order</span>(<span class="op">-</span>mean)]</code></pre></div>
-<pre><code>##                Bairro mean
-##  1:   Jardim Catarina  221
-##  2:      Vista Alegre   97
-##  3:        Mutuaguaçú   57
-##  4:          Trindade   56
-##  5:    Barro Vermelho   56
-##  6:             Mutuá   53
-##  7:            Gradim   52
-##  8:            Coelho   34
-##  9:             Rocha   33
-## 10:      Lindo Parque   32
-## 11:           Barreto   31
-## 12:           Camarão   30
-## 13:           Paraíso   29
-## 14:    Porto da Pedra   29
-## 15:             Boaçu   27
-## 16:       Nova Cidade   26
-## 17:      Parque Iriri   22
-## 18: Jardim Bom Retiro   21
-## 19:         Alcântara   21
-## 20:           Piabetá   20
-## 21:           Mutondo   18
-## 22:          Caramujo   18
-## 23:         Vila Rica   17
-##                Bairro mean</code></pre>
+<pre><code>##                      Bairro mean
+##  1:         Jardim Catarina  129
+##  2:                   Mutuá   46
+##  3:               Alcântara   41
+##  4:                Trindade   40
+##  5:          Barro Vermelho   38
+##  6:                Laranjal   30
+##  7:                   Rocha   28
+##  8:               Marambaia   23
+##  9:              Amendoeira   23
+## 10:                  Centro   21
+## 11:              Mutuaguaçú   21
+## 12:                  Coelho   19
+## 13:                 Barreto   18
+## 14:            Vista Alegre   17
+## 15:               Boa Vista   16
+## 16:                   Boaçu   16
+## 17:                  Gradim   15
+## 18:                 Camarão   15
+## 19:                 Fonseca   15
+## 20:                 Manilha   15
+## 21:                  Itaipú   14
+## 22:             Nova Cidade   13
+## 23:             Santa Luzia   11
+## 24:                  Jockey   11
+## 25:            Lindo Parque   11
+## 26:              Porto Novo   11
+## 27:               Vila Três   11
+## 28:               Parada 40   10
+## 29:                 Paraíso   10
+## 30:           Jardim Idália   10
+## 31:          Porto da Pedra   10
+## 32:                  Itaúna    9
+## 33:         Porto da Madama    9
+## 34:              Guapimirim    8
+## 35:                Antonina    8
+## 36:       Jardim Bom Retiro    7
+## 37:        Jardim Alcântara    7
+## 38:                 Outeiro    7
+## 39:          Tenente jardim    7
+## 40:                 Piabetá    7
+## 41:          Santa Catarina    7
+## 42:             Maria Paula    7
+## 43:                Monjolos    7
+## 44:          Barão do Iriri    7
+## 45:                 Niterói    7
+## 46:               Vila Rica    7
+## 47:           Venda da Cruz    7
+## 48:                 Tribóbo    6
+## 49:           Santo Antônio    6
+## 50:               Mangueira    6
+## 51: Novo México/Nova Grécia    6
+## 52:              Rio Varzea    6
+## 53:             Novo méxico    6
+## 54:             Rio do Ouro    6
+## 55:                Apolo II    6
+## 56:               Baldeador    5
+## 57:                  Icaraí    5
+## 58:          Portão do Rosa    5
+## 59:               Pendotiba    5
+## 60:                Miriambi    5
+## 61:       Varzeas Das Moças    5
+## 62:              Raul veiga    5
+## 63:             Piratininga    5
+## 64:                   Neves    5
+## 65:              Bom retiro    5
+## 66:              Grande Rio    4
+## 67:                 Mutondo    4
+## 68:                    Saco    4
+## 69:            Luiz Caçador    4
+## 70:              Califórnia    4
+## 71:         Aldeia da Prata    4
+## 72:             Monte Verde    4
+## 73:               Colubandê    3
+## 74:         Engenho Pequeno    3
+## 75:                Lagoinha    3
+## 76:         Engenho do Mato    3
+## 77:           Parada Modelo    3
+## 78:          Novo Horizonte    3
+## 79:              São Miguel    3
+## 80:                Caramujo    3
+## 81:             Galo Branco    3
+## 82:              Santa Rosa    3
+## 83:             Porto Velho    3
+## 84:        Estrela do Norte    3
+## 85:                    Mauá    2
+## 86:               Patronato    2
+## 87:            Serra Grande    2
+## 88:     Jardim Nova Marília    2
+## 89:       Jardim Califórnia    2
+## 90:                    Ingá    1
+## 91:            Parque Iriri    1
+##                      Bairro mean</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Contagem de assaltos por mês</span>
-dt[,.N,by=<span class="kw">substr</span>(mês,<span class="dv">1</span>,<span class="dv">12</span>)][<span class="kw">order</span>(<span class="op">-</span>N)]</code></pre></div>
-<pre><code>##     substr N
-##  1:      1 8
-##  2:     12 6
-##  3:      9 4
-##  4:     10 3
-##  5:      5 3
-##  6:      6 3
-##  7:     11 3
-##  8:      2 3
-##  9:      8 2
-## 10:      3 2
-## 11:      7 1</code></pre>
+<span class="kw">na.omit</span>(dt[,.N,<span class="dt">by=</span><span class="kw">substr</span>(mês,<span class="dv">1</span>,<span class="dv">12</span>)][<span class="kw">order</span>(<span class="op">-</span>N)])</code></pre></div>
+<pre><code>##     substr  N
+##  1:      7 35
+##  2:      1 25
+##  3:      9 21
+##  4:     12 20
+##  5:      8 19
+##  6:     10 14
+##  7:      5 14
+##  8:      6 14
+##  9:      4 13
+## 10:      3 13
+## 11:     11 12
+## 12:      2 11</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Contagem de assaltos por dia da semana</span>
-dt[,.N,by=<span class="kw">substr</span>(dia.semana,<span class="dv">1</span>,<span class="dv">7</span>)][<span class="kw">order</span>(<span class="op">-</span>N)]</code></pre></div>
+<span class="kw">na.omit</span>(dt[,.N,<span class="dt">by=</span><span class="kw">substr</span>(dia.semana,<span class="dv">1</span>,<span class="dv">7</span>)][<span class="kw">order</span>(<span class="op">-</span>N)])</code></pre></div>
 <pre><code>##    substr  N
-## 1:      3 13
-## 2:      1  6
-## 3:      2  6
-## 4:      4  6
-## 5:      6  4
-## 6:      5  3</code></pre>
+## 1:      3 48
+## 2:      4 44
+## 3:      2 40
+## 4:      1 31
+## 5:      5 31
+## 6:      6 16
+## 7:      7  1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Contagem de assaltos por data</span>
-dt[,.N,by=<span class="kw">substr</span>(DT.Assalto,<span class="dv">1</span>,<span class="dv">10</span>)][<span class="kw">order</span>(<span class="op">-</span>N)]</code></pre></div>
-<pre><code>##         substr N
-##  1: 06/01/2016 1
-##  2: 28/10/2015 1
-##  3: 30/12/2015 1
-##  4: 09/05/2015 1
-##  5: 20/06/2015 1
-##  6: 28/11/2015 1
-##  7: 26/10/2015 1
-##  8: 17/08/2015 1
-##  9: 18/08/2015 1
-## 10: 21/10/2015 1
-## 11: 24/09/2015 1
-## 12: 11/12/2015 1
-## 13: 09/12/2015 1
-## 14: 11/01/2016 1
-## 15: 12/02/2016 1
-## 16: 02/03/2016 1
-## 17: 18/01/2016 1
-## 18: 28/01/2016 1
-## 19: 23/09/2015 1
-## 20: 22/09/2014 1
-## 21: 12/06/2015 1
-## 22: 16/12/2015 1
-## 23: 10/11/2015 1
-## 24: 16/12/2014 1
-## 25: 25/02/2016 1
-## 26: 13/01/2015 1
-## 27: 14/01/2015 1
-## 28: 31/03/2015 1
-## 29: 21/01/2016 1
-## 30: 16/05/2016 1
-## 31: 18/05/2016 1
-## 32: 18/06/2015 1
-## 33: 12/11/2015 1
-## 34: 23/12/2015 1
-## 35: 10/09/2014 1
-## 36: 15/07/2015 1
-## 37: 10/01/2015 1
-## 38: 10/02/2015 1
-##         substr N</code></pre>
+<span class="kw">na.omit</span>(dt[,.N,<span class="dt">by=</span><span class="kw">substr</span>(DT.Assalto,<span class="dv">1</span>,<span class="dv">10</span>)][<span class="kw">order</span>(<span class="op">-</span>N)])</code></pre></div>
+<pre><code>##          substr  N
+##   1:            18
+##   2: 11/09/2015  4
+##   3: 28/08/2015  4
+##   4: 29/07/2015  4
+##   5: 16/07/2015  3
+##  ---              
+## 160: 28/07/2015  1
+## 161: 07/07/2015  1
+## 162: 06/02/2015  1
+## 163: 09/06/2015  1
+## 164: 16/06/2015  1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Contagem de assaltos por hora</span>
-dt[,.N,by=<span class="kw">substr</span>(H.Assalto,<span class="dv">1</span>,<span class="dv">24</span>)][<span class="kw">order</span>(<span class="op">-</span>N)]</code></pre></div>
-<pre><code>##     substr N
-##  1:  14:00 4
-##  2:  11:45 3
-##  3:  12:00 2
-##  4:  11:50 2
-##  5:  13:00 2
-##  6:  14:15 2
-##  7:  14:50 2
-##  8:  13:40 1
-##  9:  13:30 1
-## 10:  15:00 1
-## 11:  14:40 1
-## 12:  11:30 1
-## 13:  14:30 1
-## 14:  15:20 1
-## 15:  16:45 1
-## 16:        1
-## 17:  13:45 1
-## 18:  10:40 1
-## 19:  16:10 1
-## 20:  11:00 1
-## 21:  14:20 1
-## 22:  10:25 1
-## 23:  15:30 1
-## 24:  13:20 1
-## 25:  13:10 1
-## 26:  12:30 1
-## 27:  09:50 1
-## 28:  11:40 1
-##     substr N</code></pre>
+<span class="kw">na.omit</span>(dt[,.N,<span class="dt">by=</span><span class="kw">substr</span>(H.Assalto,<span class="dv">1</span>,<span class="dv">24</span>)][<span class="kw">order</span>(<span class="op">-</span>N)])</code></pre></div>
+<pre><code>##     substr  N
+##  1:        24
+##  2:  14:00 10
+##  3:  14:30  9
+##  4:  12:00  8
+##  5:  13:00  8
+##  6:  11:00  8
+##  7:  16:00  8
+##  8:  15:30  8
+##  9:  13:30  7
+## 10:  15:00  7
+## 11:  11:30  7
+## 12:  13:40  6
+## 13:  12:40  6
+## 14:  10:30  6
+## 15:  13:10  5
+## 16:  13:50  5
+## 17:  14:15  5
+## 18:  11:45  4
+## 19:  12:50  4
+## 20:  10:40  4
+## 21:  12:30  4
+## 22:  11:50  3
+## 23:  09:40  3
+## 24:  12:20  3
+## 25:  02:30  3
+## 26:  13:45  3
+## 27:  11:20  3
+## 28:  14:20  3
+## 29:  16:20  2
+## 30:  14:40  2
+## 31:  11:40  2
+## 32:  10:20  2
+## 33:  15:20  2
+## 34:  14:50  2
+## 35:  13:05  2
+## 36:  13:20  2
+## 37:  03:10  1
+## 38:  14:14  1
+## 39:  11:05  1
+## 40:  05:40  1
+## 41:  13:25  1
+## 42:  10:10  1
+## 43:  12:25  1
+## 44:  02:38  1
+## 45:  09:00  1
+## 46:  16:45  1
+## 47:  16:25  1
+## 48:  16:35  1
+## 49:  11:42  1
+## 50:  15:45  1
+## 51:  12:45  1
+## 52:  11:10  1
+## 53:  13:15  1
+## 54:  14:10  1
+## 55:  17:20  1
+## 56:  16:40  1
+## 57:  10:50  1
+## 58:  13:48  1
+## 59:  16:10  1
+## 60:  13:43  1
+## 61:  17:10  1
+## 62:  03:30  1
+## 63:  12:10  1
+## 64:  12:35  1
+## 65:  15:10  1
+## 66:  12:05  1
+## 67:  14:45  1
+## 68:  09:25  1
+## 69:  12:33  1
+## 70:  10:25  1
+## 71:  14:35  1
+## 72:  10:35  1
+## 73:  09:50  1
+## 74:  15:15  1
+## 75:  15:55  1
+##     substr  N</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Quantos bairros distintos?</span>
 dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Bairro) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>()
 <span class="co">#Quantas ocorrencias em cada Bairro?</span>
