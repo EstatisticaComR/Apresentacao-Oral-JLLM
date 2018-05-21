@@ -1,8 +1,11 @@
 ---
-title: 'Mapa da Criminalidade: Correios'
-author: "Luciane Ferreira Alcoforado"
-date: "8 de julho de 2016"
-#output: html_document
+title: "Assaltos aos Correios"
+author: 
+- Jerônimo José da Silva Júnior
+- Luciane Ferreira Alcoforado
+- Luiz Fernando Coelho Passos
+- Marlon Magalhães de Moraes
+date: "`r format(Sys.Date(),'%d/%m/%Y')`"
 output:
   prettydoc::html_pretty:
     theme: cayman
@@ -13,10 +16,8 @@ output:
 #install.packages("leaflet")
 #install.packages("data.table")
 #install.packages("tidyverse")
-library(leaflet)
-library(data.table)
-library(tidyverse)
-dados <- read.csv(file="http://bit.ly/bancodedadosCorreios", encoding = "UTF-8")
+library(leaflet); library(data.table); library(tidyverse)
+dados <- read.csv(file="http://bit.ly/bancodedadosPF", encoding = "UTF-8")
 ```
 
 ```{r, eval=F}
@@ -25,14 +26,13 @@ dados <- read.csv(file="base_de_dados_em_sigilo")
 
 ```{r}
 as_tibble(dados)
-summary(dados)
 
-#Quais variaveis possuem dados em branco e quantas celulas em branco temos por variavel:
-sapply(dados,function(x) sum(is.na(x)))
+#Quais variáveis possuem dados em branco e quantas células em branco temos por variável:
+sapply(dados, function(x) sum(is.na(x)))
 ```
 
-Como os registros estao distribuidos por ano:
-```{r, eval=F}
+Como os registros estão distribuídos por ano:
+```{r}
 #Separando por ano
 dAnos <- dados %>% count(ano) 
 ano <- dAnos %>% pull(ano) %>% as.factor()
@@ -41,7 +41,7 @@ freq_ano <- dAnos %>% pull(n) #pull seleciona coluna e retorna como vetor
 data.frame(ano, freq_ano, perc=round(100*freq_ano/sum(freq_ano),1))
 p1 <- ggplot(data=data.frame(ano,freq_ano),aes(x=ano, y=freq_ano, fill=as.factor(freq_ano)))+
   geom_bar(stat="identity", width=0.5,position="dodge")+
-  labs(x="ano", y= "frequencia", title="Número de Assaltos aos Correios") 
+  labs(x="Ano", y= "Frequência", title="Número de Assaltos aos Correios por ano", fill="Frequência por ano") 
 p1
 ```
 
@@ -49,30 +49,28 @@ p1
 #Separando por dia da semana
 dados_sem1 <- na.omit(dados %>% count(dia.semana))
 
-dia <- c("1.Seg","2.Ter", "3.Qua", "4.Qui", "5.Sex", "6.Sab","7.Dom")
+dia <- c("1.Seg", "2.Ter", "3.Qua", "4.Qui", "5.Sex", "6.Sab", "7.Dom")
 freq_dias <- c(dados_sem1 %>% pull(n))
 data.frame(dia,freq_dias,perc=round(100*freq_dias/sum(freq_dias),1))
 
 p2 <- ggplot(data=data.frame(dia,freq_dias),aes(x=dia, y=freq_dias, fill=as.factor(freq_dias)))+
-  geom_bar(stat="identity", width=0.5,position="dodge")+
-  labs(x="dia da semana", y= "frequencia", title="Numero de Assaltos aos Correios") 
+  geom_bar(stat="identity", width=0.5, position="dodge")+
+  labs(x="Dia da semana", y="Frequência", title="Número de Assaltos aos Correios", fill="Frequência por dia") 
 p2
 
-#Selecionando a coluna dia.semana e omitindo os dados faltantes
-#ind=is.na(dados$dia.semana)
-#dados1=dados[ind==FALSE,]
-dados_sem2 <- na.omit(dados %>% select(dia.semana))
+#Omitindo os dados faltantes
+ind <- is.na(dados$dia.semana)
+dados1 <- dados[ind==FALSE,]
 
-#criando correspondencia entre dia da semana e o nome dos dias:
+#criando correspondência entre dia da semana e o nome dos dias:
 sem <- 1:7
 nome.sem <- c("1.Segunda", "2.Terça", "3.Quarta", "4.Quinta", "5.Sexta", "6.Sábado", "7.Domingo")
 names(sem) <- nome.sem
 sem
-dia.sem.name=names(sem)[dados_sem2$dia.semana]
-dados1=data.frame(dados1,dia.sem.name)
+dia.sem.name=names(sem)[dados1$dia.semana]
 p3=ggplot(data=dados1,aes(x=as.factor(ano),fill=dia.sem.name))+
   geom_bar(stat="count", width=0.5,position="dodge")+
-  labs(x="dia da semana", y= "frequencia", title="Numero de Assaltos aos Correios") 
+  labs(x="dia da semana", y= "frequencia", title="Número de Assaltos aos Correios", fill="Dias da semana") 
 p3
 ```
 
