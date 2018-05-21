@@ -17,8 +17,8 @@ dados=read.csv(file="base_de_dados_em_sigilo", encoding = "UTF-8")
 ```{r message=FALSE, warning=FALSE}
 library(leaflet)
 
-getColor <- function(dados) {
-  sapply(dados$ano, function(ano) {
+getColor <- function(dados) { #entrar com os dados para utilizar a coluna ano (dados$ano) no sapply
+  sapply(dados$ano, function(ano) { 
   if(ano == 2013) {
     "blue"
   } else if(ano == 2014) {
