@@ -8,7 +8,7 @@ author:
 date: "`r format(Sys.Date(),'%d/%m/%Y')`"
 output:
   prettydoc::html_pretty:
-    theme: cayman
+    theme: architect
     highlight: github
 ---
 
