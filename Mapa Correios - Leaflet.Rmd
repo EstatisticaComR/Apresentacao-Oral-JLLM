@@ -1,5 +1,11 @@
 ---
-title: "Mapa dos assaltos ao Serviço Postal"
+title: "Mapa dos assaltos aos Correios"
+author: 
+- Jerônimo José da Silva Júnior
+- Luciane Ferreira Alcoforado
+- Luiz Fernando Coelho Passos
+- Marlon Magalhães de Moraes
+date: "`r format(Sys.Date(),'%d/%m/%Y')`"
 output:
   prettydoc::html_pretty:
     theme: cayman
