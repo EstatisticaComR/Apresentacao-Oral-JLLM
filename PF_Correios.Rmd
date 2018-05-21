@@ -8,7 +8,7 @@ author:
 date: "`r format(Sys.Date(),'%d/%m/%Y')`"
 output:
   prettydoc::html_pretty:
-    theme: cayman
+    theme: architect
     highlight: github
 ---
 
@@ -74,37 +74,29 @@ p3=ggplot(data=dados1,aes(x=as.factor(ano),fill=dia.sem.name))+
 p3
 ```
 
-Agora vamos utilizar o pacote data.table que foi concebido para facilitar a tabulacao dos dados. 
-Neste pacote podemos acessar rapidamente um subconjunto de dados, agrupa-los, atualiza-los, produzir tabelas.
+Agora vamos utilizar o pacote data.table que foi concebido para facilitar a tabulação dos dados. 
+Neste pacote podemos acessar rapidamente um subconjunto de dados, agrupá-los, atualizá-los e produzir tabelas.
 Para instalar o pacote use: install.packages("data.table")
 
 ```{r}
 dt=data.table(dados)
 
-#Numero de linhas
+#Número de linhas
 dt[,.N]
-#Variaveis do banco de dados
+#Variáveis do banco de dados
 names(dt)
-#Quantos niveis distintos em cada variavel:
-sapply(dt,function(x) length(unique(x)))
+#Quantos níveis distintos em cada variável:
+sapply(dt, function(x) length(unique(x)))
 #Quantos assaltos por município?
 dt[,.N,by=Mun][order(-N)]
-#Quantos assaltos por bairro?
-dt[,.N,by=Bairro][order(-N)]
-#Os seis bairros com maior ocorrencia de assalto
+#Os seis bairros com maior ocorrência de assalto
 head(dt[,.N,by=Bairro][order(-N)])
-#Criar um codigo de area e listar as areas com maior ocorrencia (ex. CEP)
-dt[,.N,by=CEP][order(-N)]
-#Simulando as ocorrencias de um universo de 1000 assaltos por amostragem sobre os dados
-dt[sample(1:.N,1000, replace=T), .(mean=mean(.N)), by=Bairro][order(-mean)]
+#Simulando as ocorrências de um universo de 1000 assaltos por amostragem sobre os seis bairros com maior ocorrência de assalto
+head(dt[sample(1:.N,1000, replace=T), .(mean=mean(.N)), by=Bairro][order(-mean)])
 #Contagem de assaltos por mês
 na.omit(dt[,.N,by=substr(mês,1,12)][order(-N)])
 #Contagem de assaltos por dia da semana
 na.omit(dt[,.N,by=substr(dia.semana,1,7)][order(-N)])
-#Contagem de assaltos por data
-na.omit(dt[,.N,by=substr(DT.Assalto,1,10)][order(-N)])
-#Contagem de assaltos por hora
-na.omit(dt[,.N,by=substr(H.Assalto,1,24)][order(-N)])
 ```
 
 ```{r}
@@ -117,26 +109,3 @@ dt %>% group_by(Bairro) %>% summarize(ocorrencia=n()) %>% arrange(desc(ocorrenci
 #modo2
 dt %>% count(Bairro,sort=TRUE)
 ```
-
-```{r, eval=F}
-require(RgoogleMaps)
-
-caixa <- qbbox(lat=dados$Latitude/10^6, lon=dados$Longitude/10^6)
-map <- GetMap.bbox(caixa$lonR, caixa$latR, destfile = "r_outtile3.png", maptype="satellite")
-PlotOnStaticMap(map, lat=dados$Latitude/10^6, lon=dados$Longitude/10^6,  pch=20, col=rgb(1,0,0,0.7), add=F)
-map <- GetMap.bbox(caixa$lonR, caixa$latR, destfile = "r_outtile3.png", maptype="mobile")
-PlotOnStaticMap(map, lat=dados$Latitude/10^6, lon=dados$Longitude/10^6,  pch=20, col=rgb(1,0,0,0.7), add=F)
-IdentifyPoints(map, n = 2, verbose = 0) #identifica pontos no mapa, n=2 ? o n?mero de pontos
-
-#mapdata<-read.csv("average_home_insurance.csv",header=T)
-#install.packages("ggmap")
-#install.packages("mapproj")
-library(ggmap)
-library(mapproj)
-mapdata=data.frame(longitude=c(-43.207778),latitude=c( -22.902778), Home.Insurance=c(200))
-map <- get_map(location = 'BR', zoom = 4)
-ggmap(map)
-TC <-ggmap(map)+geom_point(data=mapdata,alpha = .7, aes(x=longitude, y=latitude,size =Home.Insurance),color='red')+ggtitle("Average Home Insurance By City($)")
-TC
-```
-
