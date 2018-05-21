@@ -232,12 +232,12 @@ dt[,.N,by=Mun][<span class="kw">order</span>(<span class="op">-</span>N)]</code>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Simulando as ocorrências de um universo de 1000 assaltos por amostragem sobre os seis bairros com maior ocorrência de assalto</span>
 <span class="kw">head</span>(dt[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>.N,<span class="dv">1000</span>, <span class="dt">replace=</span>T), .(<span class="dt">mean=</span><span class="kw">mean</span>(.N)), <span class="dt">by=</span>Bairro][<span class="kw">order</span>(<span class="op">-</span>mean)])</code></pre></div>
 <pre><code>##             Bairro mean
-## 1: Jardim Catarina  116
-## 2:       Alcântara   53
-## 3:        Trindade   45
-## 4:  Barro Vermelho   41
-## 5:           Mutuá   41
-## 6:        Laranjal   29</code></pre>
+## 1: Jardim Catarina  111
+## 2:  Barro Vermelho   46
+## 3:       Alcântara   40
+## 4:        Trindade   38
+## 5:        Laranjal   36
+## 6:           Mutuá   35</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Contagem de assaltos por mês</span>
 <span class="kw">na.omit</span>(dt[,.N,<span class="dt">by=</span><span class="kw">substr</span>(mês,<span class="dv">1</span>,<span class="dv">12</span>)][<span class="kw">order</span>(<span class="op">-</span>N)])</code></pre></div>
 <pre><code>##     substr  N
