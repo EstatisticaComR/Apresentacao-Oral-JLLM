@@ -12,8 +12,9 @@ output:
     highlight: github
 ---
 
+Banco de dados não disponível, pois os dados são confidenciais da Polícia Federal
 ```{r, echo = F}
-dados=read.csv(file="http://bit.ly/bancodedadosCorreios", encoding = "UTF-8")
+dados=read.csv(file="...", encoding = "UTF-8")
 ```
 
 ```{r, eval  = F}
