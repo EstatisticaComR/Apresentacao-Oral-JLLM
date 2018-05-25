@@ -12,12 +12,13 @@ output:
     highlight: github
 ---
 
+Banco de dados não disponível, pois os dados são confidenciais da Polícia Federal
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 #install.packages("leaflet")
 #install.packages("data.table")
 #install.packages("tidyverse")
 library(leaflet); library(data.table); library(tidyverse)
-dados <- read.csv(file="http://bit.ly/bancodedadosPF", encoding = "UTF-8")
+dados <- read.csv(file="...", encoding = "UTF-8")
 ```
 
 ```{r, eval=F}
