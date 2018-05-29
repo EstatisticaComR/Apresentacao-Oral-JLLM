@@ -1,2 +1,5 @@
 install.packages("rmarkdown")
 install.packages("prettydoc")
+install.packages("leaflet")
+install.packages("data.table")
+install.packages("tidyverse")
