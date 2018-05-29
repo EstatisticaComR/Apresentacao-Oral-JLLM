@@ -12,12 +12,9 @@ output:
     highlight: github
 ---
 
-Banco de dados não disponível, pois os dados são confidenciais da Polícia Federal
+* Banco de dados não disponível, pois os dados são confidenciais da Polícia Federal
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-#install.packages("leaflet")
-#install.packages("data.table")
-#install.packages("tidyverse")
-library(leaflet); library(data.table); library(tidyverse)
+library(data.table); library(tidyverse)
 dados <- read.csv(file="...", encoding = "UTF-8")
 ```
 
@@ -32,7 +29,7 @@ as_tibble(dados)
 sapply(dados, function(x) sum(is.na(x)))
 ```
 
-Como os registros estão distribuídos por ano:
+* Registros distribuídos por ano:
 ```{r}
 #Separando por ano
 dAnos <- dados %>% count(ano) 
@@ -46,6 +43,7 @@ p1 <- ggplot(data=data.frame(ano,freq_ano),aes(x=ano, y=freq_ano, fill=as.factor
 p1
 ```
 
+* Registros distribuídos por dia da semana:
 ```{r}
 #Separando por dia da semana
 dados_sem1 <- na.omit(dados %>% count(dia.semana))
@@ -75,10 +73,7 @@ p3=ggplot(data=dados1,aes(x=as.factor(ano),fill=dia.sem.name))+
 p3
 ```
 
-Agora vamos utilizar o pacote data.table que foi concebido para facilitar a tabulação dos dados. 
-Neste pacote podemos acessar rapidamente um subconjunto de dados, agrupá-los, atualizá-los e produzir tabelas.
-Para instalar o pacote use: install.packages("data.table")
-
+* Agora vamos utilizar o pacote data.table que foi concebido para facilitar a tabulação dos dados. Neste pacote podemos acessar rapidamente um subconjunto de dados, agrupá-los, atualizá-los e produzir tabelas.
 ```{r}
 dt=data.table(dados)
 
@@ -100,6 +95,7 @@ na.omit(dt[,.N,by=substr(mês,1,12)][order(-N)])
 na.omit(dt[,.N,by=substr(dia.semana,1,7)][order(-N)])
 ```
 
+* Registros distribuídos por bairro:
 ```{r}
 #Quantos bairros distintos?
 dt %>% select(Bairro) %>% distinct() %>% nrow()
