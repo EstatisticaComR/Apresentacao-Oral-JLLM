@@ -12,8 +12,9 @@ output:
     highlight: github
 ---
 
-Banco de dados não disponível, pois os dados são confidenciais da Polícia Federal
-```{r, echo = F}
+* Banco de dados não disponível, pois os dados são confidenciais da Polícia Federal
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(leaflet)
 dados=read.csv(file="...", encoding = "UTF-8")
 ```
 
@@ -21,9 +22,8 @@ dados=read.csv(file="...", encoding = "UTF-8")
 dados=read.csv(file="base_de_dados_em_sigilo", encoding = "UTF-8")
 ```
 
+## Leaflet
 ```{r message=FALSE, warning=FALSE}
-library(leaflet)
-
 getColor <- function(dados) { #entrar com os dados para utilizar a coluna ano (dados$ano) no sapply
   sapply(dados$ano, function(ano) { 
   if(ano == 2013) {
