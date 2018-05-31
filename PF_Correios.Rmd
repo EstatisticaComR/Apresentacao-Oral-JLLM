@@ -23,8 +23,6 @@ dados <- read.csv(file="base_de_dados_em_sigilo")
 ```
 
 ```{r}
-as_tibble(dados)
-
 #Quais variáveis possuem dados em branco e quantas células em branco temos por variável:
 sapply(dados, function(x) sum(is.na(x)))
 ```
