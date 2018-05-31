@@ -1,5 +1,5 @@
 ---
-title: "Assaltos aos Correios"
+title: "Visualização em mapa dos Assaltos aos Serviços Postais do Leste da Região Metropolitana Fluminense"
 author: 
 - Jerônimo José da Silva Júnior
 - Luciane Ferreira Alcoforado
@@ -12,13 +12,15 @@ output:
     highlight: github
 ---
 
-* Banco de dados não disponível, pois os dados são confidenciais da Polícia Federal
+Este projeto teve início em 2016, fruto da parceria entre o Núcleo de Pesquisas, Informações e Políticas Públicas DATAUFF e o Núcleo de Operações da Delegacia de Polícia Federal em Niterói com o objetivo de desenvolver um modelo de banco de dados digital georreferenciado para os registros de ocorrência de crimes de subtração de encomendas postais e a partir destes dados produzir visualização em mapas. A visualização será implementada utilizando pacotes da linguagem R, específicos para esta finalidade. Possibilitando assim uma nova forma de análise e de interpretações da ocorrência de crimes sobre encomendas postais na poligonal de Niterói.
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(data.table); library(tidyverse)
 dados <- read.csv(file="...", encoding = "UTF-8")
 ```
 
 ```{r, eval=F}
+#Banco de dados não disponível, pois os dados são confidenciais da Polícia Federal
 dados <- read.csv(file="base_de_dados_em_sigilo")
 ```
 
@@ -29,31 +31,30 @@ sapply(dados, function(x) sum(is.na(x)))
 
 * Registros distribuídos por ano:
 ```{r}
-#Separando por ano
 dAnos <- dados %>% count(ano) 
 ano <- dAnos %>% pull(ano) %>% as.factor()
 freq_ano <- dAnos %>% pull(n) #pull seleciona coluna e retorna como vetor
 
-data.frame(ano, freq_ano, perc=round(100*freq_ano/sum(freq_ano),1))
-p1 <- ggplot(data=data.frame(ano,freq_ano),aes(x=ano, y=freq_ano, fill=as.factor(freq_ano)))+
-  geom_bar(stat="identity", width=0.5,position="dodge")+
-  labs(x="Ano", y= "Frequência", title="Número de Assaltos aos Correios por ano", fill="Frequência por ano") 
-p1
+p1 <- ggplot(data.frame(ano,freq_ano), 
+             aes(x=ano, y=freq_ano, fill=as.factor(freq_ano)))+
+  geom_bar(stat="identity", width=0.5, position="dodge")+
+  labs(x="Ano", y="Frequência", fill="Frequência por ano", 
+       title="Número de Assaltos aos Correios por ano"); p1
 ```
 
 * Registros distribuídos por dia da semana:
 ```{r}
-#Separando por dia da semana
 dados_sem1 <- na.omit(dados %>% count(dia.semana))
 
-dia <- c("1.Seg", "2.Ter", "3.Qua", "4.Qui", "5.Sex", "6.Sab", "7.Dom")
-freq_dias <- c(dados_sem1 %>% pull(n))
-data.frame(dia,freq_dias,perc=round(100*freq_dias/sum(freq_dias),1))
+dia <- c("Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab")
+freq_dias <- dados_sem1 %>% pull(n)
+data.frame(dia, freq_dias, perc=round(100*freq_dias/sum(freq_dias),1))
 
-p2 <- ggplot(data=data.frame(dia,freq_dias),aes(x=dia, y=freq_dias, fill=as.factor(freq_dias)))+
+p2 <- ggplot(data.frame(dia, freq_dias), 
+             aes(x=fct_reorder(dia, freq_dias), y=freq_dias, fill=as.factor(freq_dias)))+
   geom_bar(stat="identity", width=0.5, position="dodge")+
-  labs(x="Dia da semana", y="Frequência", title="Número de Assaltos aos Correios", fill="Frequência por dia") 
-p2
+  labs(x="Dia da semana", y="Frequência", fill="Frequência por dia", 
+       title="Número de Assaltos aos Correios"); p2
 
 #Omitindo os dados faltantes
 ind <- is.na(dados$dia.semana)
@@ -61,14 +62,15 @@ dados1 <- dados[ind==FALSE,]
 
 #criando correspondência entre dia da semana e o nome dos dias:
 sem <- 1:7
-nome.sem <- c("1.Segunda", "2.Terça", "3.Quarta", "4.Quinta", "5.Sexta", "6.Sábado", "7.Domingo")
+nome.sem <- c("1.Domingo", "2.Segunda", "3.Terça", "4.Quarta", "5.Quinta", "6.Sexta", "7.Sábado")
 names(sem) <- nome.sem
 sem
-dia.sem.name=names(sem)[dados1$dia.semana]
-p3=ggplot(data=dados1,aes(x=as.factor(ano),fill=dia.sem.name))+
+dia.sem.name <- names(sem)[dados1$dia.semana]
+
+p3 <- ggplot(dados1, aes(x=as.factor(ano), fill=dia.sem.name))+
   geom_bar(stat="count", width=0.5,position="dodge")+
-  labs(x="dia da semana", y= "frequencia", title="Número de Assaltos aos Correios", fill="Dias da semana") 
-p3
+  labs(x="Anos", y= "frequencia", fill="Dias da semana", 
+       title="Número de Assaltos aos Correios"); p3
 ```
 
 * Agora vamos utilizar o pacote data.table que foi concebido para facilitar a tabulação dos dados. Neste pacote podemos acessar rapidamente um subconjunto de dados, agrupá-los, atualizá-los e produzir tabelas.
@@ -103,4 +105,33 @@ dt %>% select(Bairro) %>% distinct() %>% nrow()
 dt %>% group_by(Bairro) %>% summarize(ocorrencia=n()) %>% arrange(desc(ocorrencia))
 #modo2
 dt %>% count(Bairro,sort=TRUE)
+```
+
+##Leaflet
+O **Leaflet** é a principal biblioteca JavaScript de código aberto para mapas interativos compatíveis com dispositivos móveis, funciona de maneira eficiente em todas as principais plataformas móveis e de desktop.
+
+```{r}
+getColor <- function(dados) { #entrar com os dados para utilizar a coluna ano (dados$ano) no sapply
+  sapply(dados$ano, function(ano) { 
+  if(ano == 2013) {
+    "blue"
+  } else if(ano == 2014) {
+    "green"
+  } else if(ano == 2015) {
+    "orange"
+  } else {
+    "red"
+  }})
+}
+
+icons <- awesomeIcons(
+  icon = 'ios-close',
+  iconColor = 'black',
+  library = 'ion',
+  markerColor = getColor(dados)
+)
+
+leaflet(dados) %>% addTiles() %>%
+  addAwesomeMarkers(dados$Longitude/10^6, dados$Latitude/10^6, 
+                    icon=icons, label=~as.character(ano))
 ```
